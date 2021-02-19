@@ -8,11 +8,13 @@ using OpenQA.Selenium.Interactions;
 
 namespace NUnitTestProject1
 {
+    
     public class BaseTest
     {
         protected IWebDriver driver;
         protected IWebElement search;
         protected IWebElement button;
+        protected IAction enter;
 
         [OneTimeSetUp]
         public void Initialization()
@@ -44,25 +46,6 @@ namespace NUnitTestProject1
         public void CloseBrowser()
         {
             driver.Close();
-        }
-        
-        
-        [Test, Order(1)]
-        public void CheckEnter()
-        {
-            search.SendKeys("Первая попытка");
-            search.SendKeys(Keys.Enter);
-            Assert.IsTrue(Check(), "Ожидалось, что поиск даст результаты");
-        }
-
-        [Test, Order(2)]
-        public void CheckClear()
-        {
-            search.Clear();
-            search.SendKeys("Вторая попытка");
-            FindButton();
-            button.Click();
-            Assert.IsTrue(Check(), "Ожидалось, что поиск даст результаты");
-        }
+        }    
     }
 }

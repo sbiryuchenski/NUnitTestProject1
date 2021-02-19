@@ -7,10 +7,11 @@ using System.Text;
 
 namespace NUnitTestProject1
 {
-    public class Yandex:BaseTest
+    [TestFixture]
+    public class Yandex:Google
     {
         IWebElement button;
-        [SetUp]
+        [OneTimeSetUp]
         public override void SetURL()
         {
             driver.Url = "http://www.yandex.ru";
