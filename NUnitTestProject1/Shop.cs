@@ -11,81 +11,81 @@ using OpenQA.Selenium.Interactions;
 
 namespace NUnitTestProject1
 {
-    [TestFixture]
+    [TestFixture, Description("Здесь проверяются по очереди вкладки и всплывающие пункты меню при наведении")]
     public class Shop:BaseTest
     {
         
-        [Test, Order(1)]
+        [Test, Order(1), Description("Проверка пункта BOOKS")]
         public void CheckBooks()
         {
             SetTab("Books");
             Check("/books");
         }
-        [Test, Order(2)]
+        [Test, Order(2), Description("Проверка пункта COMPUTERS")]
         public void CheckComputers()
         {
             SetTab("Computers");
             Check("/computers");
         }
-        [Test, Order(3)]
+        [Test, Order(3), Description("Проверка пункта ELECTRONICS")]
         public void CheckElectronics()
         {
             SetTab("Electronics");
             Check("/electronics");
         }
-        [Test, Order(4)]
+        [Test, Order(4), Description("Проверка пункта APPAREL & SHOES")]
         public void CheckApparelnShoes()
         {
             SetTab("Apparel & Shoes");
             Check("/apparel-shoes");
         }
-        [Test, Order(5)]
+        [Test, Order(5), Description("Проверка пункта DOWNLOADS")]
         public void CheckDigitalDownloads()
         {
             SetTab("Digital downloads");
             Check("/digital-downloads");
         }
-        [Test, Order(6)]
+        [Test, Order(6), Description("Проверка пункта JEWELRY")]
         public void CheckJewelry()
         {
             SetTab("Jewelry");
             Check("/jewelry");
         }
-        [Test, Order(7)]
+        [Test, Order(7), Description("Проверка пункта  GIFT CARDS")]
         public void CheckGiftCards()
         {
             SetTab("Gift Cards");
             Check("/gift-cards");
         }
-        [Test, Order(8)]
+        [Test, Order(8), Description("Проверка подпункта Desktops")]
         public void CheckSubDesktops()
         {
             MoveOnTab("Computers");
             SetTab("Desktops");
             Check("/desktops");
         }
-        [Test, Order(9)]
+        [Test, Order(9), Description("Проверка подпункта Notebooks")]
         public void CheckSubNotebooks()
         {
             MoveOnTab("Computers");
             SetTab("Notebooks");
             Check("/notebooks");
         }
-        [Test, Order(10)]
+        [Test, Order(10), Description("Проверка подпункта Accessories")]
         public void CheckcSubAccessories()
         {
             MoveOnTab("Computers");
             SetTab("Accessories");
             Check("/accessories");
         }
-        [Test, Order(11)]
+        [Test, Order(11), Description("Проверка подпункта Camera, photo")]
         public void CheckSubCameraPhoto()
         {
             MoveOnTab("Electronics");
             SetTab("Camera, photo");
             Check("/camera-photo");
         }
-        [Test, Order(12)]
+        [Test, Order(12), Description("Проверка подпункта Cell phones")]
         public void CheckSubCellPhones()
         {
             MoveOnTab("Electronics");

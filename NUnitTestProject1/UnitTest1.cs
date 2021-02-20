@@ -15,6 +15,8 @@ namespace NUnitTestProject1
         protected IWebDriver driver;
         protected IWebElement tab;
         protected IWebElement movetab;
+        protected IWebElement textbox;
+        protected IWebElement button;
 
 
         [OneTimeSetUp]
@@ -25,28 +27,41 @@ namespace NUnitTestProject1
             
         }
         [OneTimeSetUp, Order(1)]
-        virtual public void SetURL()
+        public virtual void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/";
         }
-        virtual protected void SetTab(string i)
+        protected virtual void SetTab(string i)
         {   
             tab = driver.FindElement(By.XPath("//a[normalize-space(text())='" + i + "']"));
             tab.Click();
         }
-        virtual protected void MoveOnTab(string i)
+        protected virtual void MoveOnTab(string i)
         {
             movetab = driver.FindElement(By.XPath("//a[normalize-space(text())='" + i + "']"));
             Actions move = new Actions(driver);
             move.MoveToElement(movetab).Build().Perform();
         }
 
-        virtual protected void Check(string check)
+        protected virtual void Check(string check)
         {
             string url = driver.Url;
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
         }
-
+        protected void InputText(string box, string input)
+        {
+            textbox = driver.FindElement(By.XPath("//input[@name='"+ box +"']"));
+            textbox.SendKeys(input);
+        }
+        protected void DeleteText(string box)
+        {
+            textbox = driver.FindElement(By.XPath("//input[@name='" + box + "']"));
+            textbox.Clear();
+        }
+        public virtual void SetButton()
+        {
+            button = driver.FindElement(By.XPath("//input[@name='register-button']"));
+        }
         [OneTimeTearDown]
         public void CloseBrowser()
         {
