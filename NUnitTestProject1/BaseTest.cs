@@ -31,9 +31,15 @@ namespace NUnitTestProject1
         {
             driver.Url = "http://demowebshop.tricentis.com/";
         }
+        protected virtual string SetPath()
+        {
+            string path = "//a[normalize-space(text())='";
+            return path;
+        }
         protected virtual void SetTab(string i)
-        {   
-            tab = driver.FindElement(By.XPath("//a[normalize-space(text())='" + i + "']"));
+        {
+            var path = SetPath();
+            tab = driver.FindElement(By.XPath(path + i + "']"));
             tab.Click();
         }
         protected virtual void MoveOnTab(string i)

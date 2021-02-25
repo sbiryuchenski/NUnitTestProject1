@@ -57,35 +57,35 @@ namespace NUnitTestProject1
             Check("/gift-cards");
         }
         [Test, Order(8), Description("Проверка подпункта Desktops")]
-        public void CheckSubDesktops()
+        virtual public void CheckSubDesktops()
         {
             MoveOnTab("Computers");
             SetTab("Desktops");
             Check("/desktops");
         }
         [Test, Order(9), Description("Проверка подпункта Notebooks")]
-        public void CheckSubNotebooks()
+        virtual public void CheckSubNotebooks()
         {
             MoveOnTab("Computers");
             SetTab("Notebooks");
             Check("/notebooks");
         }
         [Test, Order(10), Description("Проверка подпункта Accessories")]
-        public void CheckcSubAccessories()
+        virtual public void CheckcSubAccessories()
         {
             MoveOnTab("Computers");
             SetTab("Accessories");
             Check("/accessories");
         }
         [Test, Order(11), Description("Проверка подпункта Camera, photo")]
-        public void CheckSubCameraPhoto()
+        virtual public void CheckSubCameraPhoto()
         {
             MoveOnTab("Electronics");
             SetTab("Camera, photo");
             Check("/camera-photo");
         }
         [Test, Order(12), Description("Проверка подпункта Cell phones")]
-        public void CheckSubCellPhones()
+        virtual public void CheckSubCellPhones()
         {
             MoveOnTab("Electronics");
             SetTab("Cell phones");
