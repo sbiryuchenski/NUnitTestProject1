@@ -12,9 +12,8 @@ using OpenQA.Selenium.Interactions;
 namespace NUnitTestProject1
 {
     [TestFixture, Description("Здесь проверяются по очереди вкладки и всплывающие пункты меню при наведении")]
-    public class Shop:BaseTest
+    public class Tabs:BaseTest
     {
-        
         [Test, Order(1), Description("Проверка пункта BOOKS")]
         public void CheckBooks()
         {
