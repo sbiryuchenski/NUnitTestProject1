@@ -10,7 +10,7 @@ using System;
 namespace NUnitTestProject1
 {
     
-    public class BaseTest
+    public abstract class BaseTest
     {
         protected IWebDriver driver;
         protected IWebElement tab;
