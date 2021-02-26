@@ -11,6 +11,6 @@ namespace NUnitTestProject1
 {
     class CheckBox:AbstractElement
     {
-
+        public CheckBox(IWebDriver setdriver) { driver = setdriver; }
     }
 }

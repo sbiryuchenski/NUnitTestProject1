@@ -12,12 +12,24 @@ namespace NUnitTestProject1
 {
     public class PageRegistry:InitDriver
     {
+        IWebDriver driver;
+        public void InitilizeDriver(string webpath)
+        {
+            string path = Directory.GetCurrentDirectory();
+            driver = new ChromeDriver(path);
+            SetURL(webpath);
+        }
+        private void SetURL(string path)
+        {
+            driver.Url = path;
+        }
         private void FillDictionary()
         {
             InitilizeDriver("http://demowebshop.tricentis.com/");
             Dictionary<string, Textbox> textbox = new Dictionary<string, Textbox>();
-            textbox.Add("Name", new Textbox {});
-
+            Textbox name = new Textbox(driver);
+            name.SetElement("//input[@name='FirstName']");
+            textbox.Add("Name", name);
         }
     }
 }

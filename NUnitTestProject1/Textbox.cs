@@ -12,6 +12,7 @@ namespace NUnitTestProject1
 {
     class Textbox:AbstractElement
     {
+        public Textbox(IWebDriver setdriver) { driver = setdriver; }
         public void Input(string text)
         {
             element.SendKeys(text);   

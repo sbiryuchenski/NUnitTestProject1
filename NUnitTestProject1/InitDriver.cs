@@ -11,16 +11,6 @@ namespace NUnitTestProject1
 {
     public class InitDriver
     {
-        protected IWebDriver driver;
-        public void InitilizeDriver(string webpath)
-        {
-            string path = Directory.GetCurrentDirectory();
-            driver = new ChromeDriver(path);
-            SetURL(webpath);
-        }
-        private void SetURL(string path)
-        {
-            driver.Url = path;
-        }
+
     }
 }

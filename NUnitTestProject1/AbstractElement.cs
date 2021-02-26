@@ -9,9 +9,14 @@ using System;
 
 namespace NUnitTestProject1
 {
-    abstract public class AbstractElement:InitDriver
+    abstract public class AbstractElement
     {
+        protected IWebDriver driver;
         public IWebElement element;
+        public void SetElement(string xpath)
+        {
+            element = driver.FindElement(By.XPath(xpath));
+        }
         public void Click()
         {
             element.Click();

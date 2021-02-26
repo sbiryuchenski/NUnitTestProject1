@@ -11,6 +11,6 @@ namespace NUnitTestProject1
 {
     class Button:AbstractElement
     {
-
+        public Button(IWebDriver setdriver) { driver = setdriver; }
     }
 }
