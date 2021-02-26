@@ -25,5 +25,4 @@ namespace NUnitTestProject1
             tab.Click();
         }
     }
-
 }

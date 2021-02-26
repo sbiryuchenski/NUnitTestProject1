@@ -7,18 +7,10 @@ using System.Text;
 using OpenQA.Selenium.Interactions;
 using System;
 
-
 namespace NUnitTestProject1
 {
-    class Textbox:AbstractElement
+    class CheckBox:AbstractElement
     {
-        public void Input(string text)
-        {
-            element.SendKeys(text);   
-        }
-        public void Clear()
-        {
-            element.Clear();
-        }
+
     }
 }
