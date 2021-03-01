@@ -9,9 +9,8 @@ using System;
 
 namespace NUnitTestProject1
 {
-    abstract public class AbstractElement
+    abstract public class BaseElement:BaseTest
     {
-        protected IWebDriver driver;
         public IWebElement element;
         public void SetElement(string xpath)
         {

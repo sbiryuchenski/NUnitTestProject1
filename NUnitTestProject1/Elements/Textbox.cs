@@ -10,7 +10,7 @@ using System;
 
 namespace NUnitTestProject1
 {
-    class Textbox:AbstractElement
+    class Textbox:BaseElement
     {
         public Textbox(IWebDriver setdriver) { driver = setdriver; }
         public void Input(string text)

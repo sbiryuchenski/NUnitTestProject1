@@ -9,8 +9,8 @@ using System;
 
 namespace NUnitTestProject1
 {
-    class Button:AbstractElement
+    class CheckBox:BaseElement
     {
-        public Button(IWebDriver setdriver) { driver = setdriver; }
+        public CheckBox(IWebDriver setdriver) { driver = setdriver; }
     }
 }

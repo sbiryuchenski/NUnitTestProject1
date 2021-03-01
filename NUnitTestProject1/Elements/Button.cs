@@ -9,8 +9,8 @@ using System;
 
 namespace NUnitTestProject1
 {
-    public class InitDriver
+    class Button:BaseElement
     {
-
+        public Button(IWebDriver setdriver) { this.driver = setdriver; }
     }
 }
