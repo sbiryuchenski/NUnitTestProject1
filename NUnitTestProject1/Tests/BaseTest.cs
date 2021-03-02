@@ -19,17 +19,21 @@ namespace NUnitTestProject1
         protected IWebElement button;
 
 
-        [OneTimeSetUp]
+        [OneTimeSetUp, Order(0)]
         public void Initialization()
         {
             string path = Directory.GetCurrentDirectory();
             driver = new ChromeDriver(path);
-            
+            SetURL();
+            FillDictionary();
         }
-        [OneTimeSetUp, Order(1)]
         public virtual void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/";
+        }
+        public virtual void FillDictionary()
+        {
+
         }
         protected virtual string SetPath()
         {

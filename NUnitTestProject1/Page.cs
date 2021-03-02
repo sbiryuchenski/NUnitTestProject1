@@ -10,7 +10,7 @@ using OpenQA.Selenium.Interactions;
 
 namespace NUnitTestProject1
 {
-    public class PageRegistry
+    public class Page
     {
         IWebDriver driver;
         public void InitilizeDriver(string webpath)
