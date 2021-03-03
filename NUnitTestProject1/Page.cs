@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
@@ -13,23 +13,17 @@ namespace NUnitTestProject1
     public class Page
     {
         IWebDriver driver;
-        public void InitilizeDriver(string webpath)
+        public Dictionary<string, Element> webelement = new Dictionary<string, Element>();
+        public Page(IWebDriver setdriver) { driver = setdriver; }
+        private void FillDictionary(string xpath, string name)
         {
-            string path = Directory.GetCurrentDirectory();
-            driver = new ChromeDriver(path);
-            SetURL(webpath);
+            webelement.Add(name, new Element(driver));
+            webelement[name].SetElement(xpath);
         }
-        private void SetURL(string path)
+        public void SetElement(string name, string xpath)
         {
-            driver.Url = path;
+            FillDictionary(xpath, name);
         }
-        private void FillDictionary()
-        {
-            InitilizeDriver("http://demowebshop.tricentis.com/");
-            Dictionary<string, Textbox> textbox = new Dictionary<string, Textbox>();
-            Textbox name = new Textbox(driver);
-            name.SetElement("//input[@name='FirstName']");
-            textbox.Add("Name", name);
-        }
+        public IWebElement element;       
     }
 }

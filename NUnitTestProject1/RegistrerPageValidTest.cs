@@ -11,86 +11,84 @@ using OpenQA.Selenium.Interactions;
 namespace NUnitTestProject1
 {
     [TestFixture, Description("Проверка валидности пустого ввода полей на странице регистрации с помощью паттерна")]
-    class RegistrerPageValidTest:BaseTest
+    public class RegistrerPageValidTest : BaseTest
     {
-        private string urlbefore;
-        private string urlafter;
         public override void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/register";
         }
-        Button regbutton;
-        Dictionary<string, Textbox> textboxes = new Dictionary<string, Textbox>();
+        Page regpage;
+        public override void InitPage()
+        {
+            regpage = new Page(driver); 
+        }
+        protected string urlbefore;
+        protected string urlafter;
 
+        public override void FillDictionary()
+        {
+            regpage.SetElement("name", "//input[@Name='FirstName']");
+            regpage.SetElement("lastname", "//input[@Name='LastName']");
+            regpage.SetElement("email", "//input[@Name='Email']");
+            regpage.SetElement("password", "//input[@Name='Password']");
+            regpage.SetElement("confirmpassword", "//input[@Name='ConfirmPassword']");
+            regpage.SetElement("regbutton", "//input[@Name='register-button']");
+            regpage.SetElement("gender", "//input[@id='gender-female']");
+        }
+
+        private void Test(string deletename, string deletevalue, string buttonname, string error)
+        {
+            urlbefore = driver.Url;
+            regpage.webelement[deletename].Clear();
+            regpage.webelement[buttonname].Click();
+            Check(error);
+            regpage.webelement[deletename].Input(deletevalue);
+        }
         protected override void Check(string errmess)
         {
             urlafter = driver.Url;
             Assert.AreEqual(urlafter, urlbefore, errmess);
-        }
-        private void Test(string deletename, string deletevalue, string error)
-        {
-            urlbefore = driver.Url;
-            textboxes[deletename].Clear();
-            regbutton.Click();
-            Check(error);
-            textboxes[deletename].Input(deletevalue);
-        }
-        public override void FillDictionary()
-        {
-            regbutton = new Button(driver);
-            regbutton.SetElement("//input[@name='register-button']");
-            textboxes.Add("name", new Textbox(driver));
-            textboxes.Add("lastname", new Textbox(driver));
-            textboxes.Add("email", new Textbox(driver));
-            textboxes.Add("password", new Textbox(driver));
-            textboxes.Add("confirmpassword", new Textbox(driver));
-            textboxes["name"].SetElement("//input[@name='FirstName']");
-            textboxes["lastname"].SetElement("//input[@name='LastName']");
-            textboxes["email"].SetElement("//input[@name='Email']");
-            textboxes["password"].SetElement("//input[@name='Password']");
-            textboxes["confirmpassword"].SetElement("//input[@name='ConfirmPassword']");
-        }
+        }       
         private void FillAllTextBoxes()
         {
-            foreach (KeyValuePair<string, Textbox> box in textboxes)
-            {
-                box.Value.Input(box.Key);
-            }
-            textboxes["email"].Input("RegisterCheck@gmeel.com");
-            textboxes["confirmpassword"].Input("password");
+            regpage.webelement["name"].Input("name");
+            regpage.webelement["lastname"].Input("lastname");
+            regpage.webelement["email"].Input("email@email.email");
+            regpage.webelement["password"].Input("PaSsWoRd123");
+            regpage.webelement["confirmpassword"].Input("PaSsWoRd123");
         }
-        [Test, Order(1)]
+        [Test, Order(1), Description("Проверка пустых полей")]
         public void ClearCheck()
         {
             urlbefore = driver.Url;
-            regbutton.Click();
+            regpage.webelement["regbutton"].Click();
             Check("Пустые поля не прошли проверку");
             FillAllTextBoxes();
         }
-        [Test, Order(2)]
+        [Test, Order(2), Description("Проверка при отсутсвии имени")]
         public void NameCheck()
         {
-            Test("name", "name", "Имя не прошло проверку");
+            Test("name", "name", "regbutton", "Имя не прошло проверку");
         }
-        [Test, Order(2)]
+        [Test, Order(2), Description("Проверка при отсутствии фамилии")]
         public void LastNameCheck()
         {
-            Test("lastname", "lastname", "Фамилия не прошла проверку");
+            Test("lastname", "lastname", "regbutton", "Фамилия не прошла проверку");
         }
-        [Test, Order(3)]
+        [Test, Order(3), Description("Проверка  при отсутствии эл.почты")]
         public void EmailCheck()
         {
-            Test("email", "email@email.com", "Эл.почта не прошла проверку");
+            Test("email", "email@email.com", "regbutton", "Эл.почта не прошла проверку");
         }
-        [Test, Order(4)]
+        [Test, Order(4), Description("Проверка при отсутствии пароля")]
         public void PasswordCheck()
         {
-            Test("password", "PaSsWoRd123", "Пароль не прошёл проверку");
+            Test("password", "PaSsWoRd123", "regbutton", "Пароль не прошёл проверку");
         }
-        [Test, Order(5)]
+        [Test, Order(5), Description("Проверка при отсутствии подтверждения пароля")]
         public void ConfirmPasswordCheck()
         {
-            Test("password", "PaSsWoRd123", "Повтор пароля не прошёл проверку");
+            Test("password", "PaSsWoRd123", "regbutton", "Повтор пароля не прошёл проверку");
         }
     }
 }

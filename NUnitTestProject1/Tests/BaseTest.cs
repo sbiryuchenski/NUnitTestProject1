@@ -25,7 +25,11 @@ namespace NUnitTestProject1
             string path = Directory.GetCurrentDirectory();
             driver = new ChromeDriver(path);
             SetURL();
+            InitPage();
             FillDictionary();
+        }
+        public virtual void InitPage()
+        {
         }
         public virtual void SetURL()
         {

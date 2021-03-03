@@ -9,9 +9,11 @@ using System;
 
 namespace NUnitTestProject1
 {
-    abstract public class BaseElement:BaseTest
+    public class Element:BaseTest
     {
-        public IWebElement element;
+        
+        IWebElement element;
+        public Element(IWebDriver setdriver) { driver = setdriver; }
         public void SetElement(string xpath)
         {
             element = driver.FindElement(By.XPath(xpath));
@@ -24,6 +26,19 @@ namespace NUnitTestProject1
         {
             Actions move = new Actions(driver);
             move.MoveToElement(element).Build().Perform();
+        }
+        public void Input(string text)
+        {
+            element.SendKeys(text);
+        }
+        public void Clear()
+        {
+            element.Clear();
+        }
+        public void Rewrite(string text)
+        {
+            element.Clear();
+            element.SendKeys(text);
         }
     }
 }
