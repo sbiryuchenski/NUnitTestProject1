@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 
 namespace NUnitTestProject1.Tests
 { 
@@ -15,6 +16,7 @@ namespace NUnitTestProject1.Tests
     {
         private string urlbefore;
         private string urlafter;
+        WebDriverWait wait;
         public override void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/login";
@@ -22,36 +24,35 @@ namespace NUnitTestProject1.Tests
         Page logpage;
         public override void InitPage()
         {
-            logpage = new Page(driver);
+            logpage = new Page(driver); 
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Инициализация ожидания
         }
         private void LogButtonClick()
         {
-
+            urlbefore = driver.Url;
+            logpage.webelement["logbutton"].Click();
+            urlafter = driver.Url;
         }
         public override void FillDictionary()
         {
             logpage.SetElement("email", "//input[@Name='Email']");
             logpage.SetElement("password", "//input[@Name='Password']");
-            logpage.SetElement("logbutton", "//input[@type='submit']");
+            logpage.SetElement("logbutton", "//input[@value='Log in']");
         }
         [Test, Order(1), Description("Тест с неправильными данными для входа")]
         public void LoginWrongTest()
         {
             logpage.webelement["email"].Input("123");
             logpage.webelement["password"].Input("123");
-            urlbefore = driver.Url;
-            logpage.webelement["logbutton"].Click();
-            urlafter = driver.Url;
+            LogButtonClick();
             Assert.IsTrue(urlafter.Contains(urlbefore), "Тест с неправильными данными для входа не выполняется");
         }
         [Test, Order(2), Description("Тест с верными данными для входа")]
         public void LoginTrueTest()
         {
-            logpage.webelement["email"].Input("email@email.email");
-            logpage.webelement["password"].Input("PaSsWoRd123");
-            urlbefore = driver.Url;
-            logpage.webelement["logbutton"].Click();
-            urlafter = driver.Url;
+            logpage.webelement["email"].Rewrite("email@email.email");
+            logpage.webelement["password"].Rewrite("PaSsWoRd123");
+            LogButtonClick();
             Assert.IsFalse(urlafter.Contains(urlbefore), "Тест с верными данными для входа не выполнен");
         }
     }

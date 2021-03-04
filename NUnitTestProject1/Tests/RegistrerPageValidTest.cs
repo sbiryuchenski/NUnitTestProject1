@@ -37,7 +37,8 @@ namespace NUnitTestProject1
         }
 
         private void Test(string deletename, string deletevalue, string buttonname, string error)
-        {
+        {// deletename - имя элемента, из которого нужно удалить текст. deletevalue - значение удаляемого элемента
+         // buttonname - имя кнопки, которую нужно нажать. error - текст ошибки если тест не выполнится
             urlbefore = driver.Url;
             regpage.webelement[deletename].Clear();
             regpage.webelement[buttonname].Click();

@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using OpenQA.Selenium.Interactions;
 using System;
+using OpenQA.Selenium.Support.UI;
 
 namespace NUnitTestProject1
 {
@@ -20,14 +21,16 @@ namespace NUnitTestProject1
 
 
         [OneTimeSetUp, Order(0)]
-        public void Initialization()
+        public void Initialization() // Инициализация браузера, страницы и элементов на странице
         {
             string path = Directory.GetCurrentDirectory();
             driver = new ChromeDriver(path);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
             SetURL();
             InitPage();
             FillDictionary();
         }
+         
         public virtual void InitPage()
         {
         }
@@ -37,9 +40,8 @@ namespace NUnitTestProject1
         }
         public virtual void FillDictionary()
         {
-
         }
-        protected virtual string SetPath()
+        protected virtual string SetPath()// Установка пути к элементу на странице
         {
             string path = "//a[normalize-space(text())='";
             return path;
@@ -57,7 +59,7 @@ namespace NUnitTestProject1
             move.MoveToElement(movetab).Build().Perform();
         }
 
-        protected virtual void Check(string check)
+        protected virtual void Check(string check)// Проверка соответствия URL
         {
             string url = driver.Url;
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
