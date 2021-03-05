@@ -1,12 +1,14 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using OpenQA.Selenium.Interactions;
 using System;
 using OpenQA.Selenium.Support.UI;
+using System.Configuration;
 
 namespace NUnitTestProject1
 {
@@ -19,12 +21,29 @@ namespace NUnitTestProject1
         protected IWebElement textbox;
         protected IWebElement button;
 
+        public enum BrowserType
+        {
+            Chrome = 1, IE
+        }
 
         [OneTimeSetUp, Order(0)]
         public void Initialization() // Инициализация браузера, страницы и элементов на странице
         {
+            BrowserType browser = (BrowserType)Enum.Parse(typeof(BrowserType), ConfigurationManager.AppSettings.Get("browser"));
             string path = Directory.GetCurrentDirectory();
-            driver = new ChromeDriver(path);
+            switch (browser)
+            {
+                case BrowserType.Chrome:
+                    driver = new ChromeDriver("packages/Selenium.Chrome.WebDriver.85.0.0/driver");
+                    break;
+                case BrowserType.IE:
+                    driver = new InternetExplorerDriver(path);
+                    break;
+                default:
+                    driver = new ChromeDriver("packages/Selenium.Chrome.WebDriver.85.0.0/driver");
+                    break;
+
+            }
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
             SetURL();
             InitPage();
