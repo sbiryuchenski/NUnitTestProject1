@@ -27,6 +27,15 @@ namespace NUnitTestProject1.Tests
             logpage = new Page(driver); 
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Инициализация ожидания
         }
+        private void CheckUrlWrong(string errormessage)
+        {
+            Assert.IsTrue(urlafter.Contains(urlbefore), errormessage);
+
+        }
+        private void CheckUrlTrue(string errormessage)
+        {
+            Assert.IsFalse(urlafter.Contains(urlbefore), errormessage);
+        }
         private void LogButtonClick()
         {
             urlbefore = driver.Url;
@@ -45,7 +54,7 @@ namespace NUnitTestProject1.Tests
             logpage.webelement["email"].Input("123");
             logpage.webelement["password"].Input("123");
             LogButtonClick();
-            Assert.IsTrue(urlafter.Contains(urlbefore), "Тест с неправильными данными для входа не выполняется");
+            CheckUrlWrong("Тест с неверными данными для входа не прошёл проверку");
         }
         [Test, Order(2), Description("Тест с верными данными для входа")]
         public void LoginTrueTest()
@@ -53,7 +62,7 @@ namespace NUnitTestProject1.Tests
             logpage.webelement["email"].Rewrite("email@email.email");
             logpage.webelement["password"].Rewrite("PaSsWoRd123");
             LogButtonClick();
-            Assert.IsFalse(urlafter.Contains(urlbefore), "Тест с верными данными для входа не выполнен");
+            CheckUrlTrue("Тест с верными данными для входа не прошёл проверку");
         }
     }
 }

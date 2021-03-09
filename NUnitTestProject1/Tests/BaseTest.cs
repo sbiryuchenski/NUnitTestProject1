@@ -20,36 +20,33 @@ namespace NUnitTestProject1
         protected IWebElement movetab;
         protected IWebElement textbox;
         protected IWebElement button;
-
-        public enum BrowserType
-        {
-            Chrome = 1, IE
-        }
+        WebDriverWait wait;
 
         [OneTimeSetUp, Order(0)]
         public void Initialization() // Инициализация браузера, страницы и элементов на странице
         {
-            BrowserType browser = (BrowserType)Enum.Parse(typeof(BrowserType), ConfigurationManager.AppSettings.Get("browser"));
+            Browser browsertype = new Browser();
             string path = Directory.GetCurrentDirectory();
+            Browser.BrowserType browser = browsertype.GetBrowser();
             switch (browser)
             {
-                case BrowserType.Chrome:
-                    driver = new ChromeDriver("packages/Selenium.Chrome.WebDriver.85.0.0/driver");
+                case Browser.BrowserType.Chrome:
+                    driver = new ChromeDriver(path);
                     break;
-                case BrowserType.IE:
+                case Browser.BrowserType.IE:
                     driver = new InternetExplorerDriver(path);
                     break;
                 default:
-                    driver = new ChromeDriver("packages/Selenium.Chrome.WebDriver.85.0.0/driver");
-                    break;
+                    throw new Exception("Указан неверный браузер в файле конфигурации");
 
             }
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
             SetURL();
             InitPage();
             FillDictionary();
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Создаю новое ожидание
         }
-         
+
         public virtual void InitPage()
         {
         }
@@ -80,6 +77,7 @@ namespace NUnitTestProject1
 
         protected virtual void Check(string check)// Проверка соответствия URL
         {
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='page-title']")));// Ждупока отобразится заголовок страницы
             string url = driver.Url;
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
         }
