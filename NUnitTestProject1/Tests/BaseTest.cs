@@ -20,7 +20,7 @@ namespace NUnitTestProject1
         protected IWebElement movetab;
         protected IWebElement textbox;
         protected IWebElement button;
-        WebDriverWait wait;
+        protected WebDriverWait wait;
 
         [OneTimeSetUp, Order(0)]
         public void Initialization() // Инициализация браузера, страницы и элементов на странице
