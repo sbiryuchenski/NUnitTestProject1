@@ -40,6 +40,9 @@ namespace NUnitTestProject1.Tests
             Assert.IsTrue(secondbookexist, "Второй книги нет в корзине");
             bool thirdbookexist = driver.FindElements(By.XPath("//a[normalize-space(text())='" + name3 + "']")).Count > 0;
             Assert.IsTrue(thirdbookexist, "Третьей книги нет в корзине");
+            driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../../td[@class='qty nobr']/input"));// Нахожу input для Fiction
+            driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../..//span[@class='product-unit-price']"));// Нахожу Price
+            driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../..//span[@class='product-subtotal']"));// Нахожу Total
         }
         private void DeleteFromCart()
         {
