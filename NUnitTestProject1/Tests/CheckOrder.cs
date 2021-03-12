@@ -30,25 +30,33 @@ namespace NUnitTestProject1.Tests
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
             orderpage.webelement["health"].Click();
         }
+        protected override void Check(string check)
+        {
+            bool firstbookexist = driver.FindElements(By.XPath("//a[normalize-space(text())='" + check + "']")).Count > 0;
+            Assert.IsTrue(firstbookexist, check + " нет в корзине");
+        }
         private void CheckBooksInCart()
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@id='bar-notification']")));
             driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
-            bool firstbookexist = driver.FindElements(By.XPath("//a[normalize-space(text())='" + name1 + "']")).Count>0;
-            Assert.IsTrue(firstbookexist, "Первой книги нет в корзине");
-            bool secondbookexist = driver.FindElements(By.XPath("//a[normalize-space(text())='" + name2 + "']")).Count > 0;
-            Assert.IsTrue(secondbookexist, "Второй книги нет в корзине");
-            bool thirdbookexist = driver.FindElements(By.XPath("//a[normalize-space(text())='" + name3 + "']")).Count > 0;
-            Assert.IsTrue(thirdbookexist, "Третьей книги нет в корзине");
+            Check(name1);
+            Check(name2);
+            Check(name3);
             driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../../td[@class='qty nobr']/input"));// Нахожу input для Fiction
             driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../..//span[@class='product-unit-price']"));// Нахожу Price
             driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../..//span[@class='product-subtotal']"));// Нахожу Total
         }
-        private void DeleteFromCart()
+        private void DeleteFromCart(string name)
         {
-            driver.FindElement(By.XPath("//a[normalize-space(text())='" + name1 + "']/../..//input[@type='checkbox']")).Click();
-            driver.FindElement(By.XPath("//a[normalize-space(text())='" + name2 + "']/../..//input[@type='checkbox']")).Click();
-            driver.FindElement(By.XPath("//a[normalize-space(text())='" + name3 + "']/../..//input[@type='checkbox']")).Click();
+            driver.FindElement(By.XPath("//a[normalize-space(text())='" + name + "']/../..//input[@type='checkbox']")).Click();
+            driver.FindElement(By.XPath("//input[@name='updatecart']")).Click();
+        }
+        private void DeleteAllFromCart(params string[] names)
+        {
+            for(int i = 0; i<names.Length; i++)
+            {
+                driver.FindElement(By.XPath("//a[normalize-space(text())='" + names[i] + "']/../..//input[@type='checkbox']")).Click();
+            }
             driver.FindElement(By.XPath("//input[@name='updatecart']")).Click();
         }
         Page orderpage;
@@ -72,7 +80,8 @@ namespace NUnitTestProject1.Tests
         {
             AddToCart();
             CheckBooksInCart();
-            DeleteFromCart();
+            // DeleteFromCart();
+            DeleteAllFromCart();
         }
     }
 }
