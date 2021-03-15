@@ -34,14 +34,17 @@ namespace NUnitTestProject1
                     driver = new ChromeDriver(path);
                     break;
                 case Browser.BrowserType.IE:
-                    driver = new InternetExplorerDriver(path);
+                    InternetExplorerOptions options = new InternetExplorerOptions();
+                    options.PageLoadStrategy = PageLoadStrategy.None;
+                    driver = new InternetExplorerDriver(path, options, TimeSpan.FromSeconds(5));
                     break;
                 default:
                     throw new Exception("Указан неверный браузер в файле конфигурации");
 
             }
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
+            //driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
             SetURL();
+            driver.SwitchTo().Window(driver.CurrentWindowHandle);
             InitPage();
             FillDictionary();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Создаю новое ожидание

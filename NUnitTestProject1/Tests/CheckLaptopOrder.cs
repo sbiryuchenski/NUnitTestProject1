@@ -21,33 +21,77 @@ namespace NUnitTestProject1.Tests
         {
             driver.Url = "http://demowebshop.tricentis.com/notebooks";
         }
-        public void SetFields()
+
+        [Description("Ввод страны")]
+        private void SetCountry(string countryname)
         {
             selectcountry = new SelectElement(driver.FindElement(By.XPath("//select[@class='country-input']")));
-            selectcountry.SelectByText("Canada");
-            wait.Until(ExpectedConditions.ElementExists(By.XPath("//select[@class='state-input']//*[text()='Nunavut']")));
-            selectstate = new SelectElement(driver.FindElement(By.XPath("//select[@class='state-input']")));
-            selectstate.SelectByText("Nunavut");
-            driver.FindElement(By.XPath("//input[@class='zip-input']")).SendKeys("9898");
+            selectcountry.SelectByText(countryname);
         }
-        private void AddToCart()
+
+        [Description("Ожидание для следующего действия")]
+        private void Wait()
         {
-            driver.FindElement(By.XPath("//input[@value='Add to cart']")).Click();
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@id='bar-notification']")));
-            driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
         }
-        private void Check()
+
+        [Description("Ввод штата")]
+
+        private void SetState(string statename)
         {
-            bool laptopexist = driver.FindElements(By.XPath("//a[normalize-space(text())='14.1-inch Laptop']")).Count > 0;
-            Assert.IsTrue(laptopexist, "Товара нет в корзине");
-            SetFields();
-            driver.FindElement(By.XPath("//input[@name='estimateshipping']")).Click();
-            wait.Until(ExpectedConditions.ElementExists(By.XPath("//span[@class='option-description']")));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath("//select[@class='state-input']//*[text()='Nunavut']")));
+            selectstate = new SelectElement(driver.FindElement(By.XPath("//select[@class='state-input']")));
+            selectstate.SelectByText(statename);
+        }
+
+        [Description("Ввод индекса")]
+        private void SetZip(string zipcode)
+        {
+            driver.FindElement(By.XPath("//input[@class='zip-input']")).SendKeys("9898");
+        }
+
+        [Description("Ввод полей")]
+        public void SetFields(string countryname, string statename, string zip)
+        {
+            SetCountry(countryname);
+            SetState(statename);
+            SetZip(zip);
+        }
+
+        [Description("Проверка отображения информации после ввода полей")]
+        private void CheckInform()
+        {
             bool textexist = driver.FindElements(By.XPath("//span[@class='option-description']")).Count > 0;
             Assert.IsTrue(textexist, "Информация не отображается");
         }
-        [Test]
+
+        [Description("Проверка наличия товара в корзине")]
+        private void CheckCart()
+        {
+            bool laptopexist = driver.FindElements(By.XPath("//a[normalize-space(text())='14.1-inch Laptop']")).Count > 0;
+            Assert.IsTrue(laptopexist, "Товара нет в корзине");
+        }
+
+        [Description("Добавление товара в корзину и переход в корзину")]
+        private void AddToCart()
+        {
+            driver.FindElement(By.XPath("//input[@value='Add to cart']")).Click();
+            Wait();
+            driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
+        }
+
+        [Description("Проверка наличия товара в корзине, проверка ввода полей и наличия информации после ввода")]
+        private void Check()
+        {
+            CheckCart();
+            SetFields("Canada", "Nunavut", "9898");
+            driver.FindElement(By.XPath("//input[@name='estimateshipping']")).Click();
+            Wait();
+            CheckInform();
+        }
+
+        [Test, Description("Проверка добавления товара в корзину и заполнения полей")]
         public void TestLaptop()
         {
             AddToCart();
