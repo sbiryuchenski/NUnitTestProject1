@@ -12,24 +12,24 @@ using OpenQA.Selenium.Support.UI;
 
 namespace NUnitTestProject1.Tests
 {
-    [TestFixture("Fiction", "Science", "Computing and Internet"), Description("Проверка добавления товаров в корзину")]
+    [TestFixture("Fiction", "Health Book", "Computing and Internet"), Description("Проверка добавления товаров в корзину")]
     class CheckOrder:BaseTest
     {
-        string name1, name2, name3;
-        List<string> books;
+        List<string> books = new List<string>();
         public CheckOrder(string name1, string name2, string name3)
         {
-            this.name1 = name1;
-            this.name2 = name2;
-            this.name3 = name3;
+            books.Add(name1);
+            books.Add(name2);
+            books.Add(name3);
         }
         private void AddToCart()
         {
-            orderpage.webelement["fiction"].Click();
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
-            orderpage.webelement["science"].Click();
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
-            orderpage.webelement["health"].Click();
+            foreach(string name in books)
+            {
+                orderpage.webelement[name].Click();
+                wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
+            }
+
         }
         protected override void Check(string check)
         {
@@ -70,17 +70,15 @@ namespace NUnitTestProject1.Tests
         {
             driver.Url = "http://demowebshop.tricentis.com/books";
         }
-        private void FillList()
-        {
-            books = new List<string>() { name1, name2, name3 };
-        }
+        
         public override void FillDictionary()
         {
-            orderpage.SetElement("fiction", "//a[normalize-space(text())='" + name1 + "']/../..//input[@type='button']");
-            orderpage.SetElement("science", "//a[normalize-space(text())='" + name2 + "']/../..//input[@type='button']");
-            orderpage.SetElement("health", "//a[normalize-space(text())='" + name3 + "']/../..//input[@type='button']");
+            foreach(string name in books)
+            {
+                orderpage.SetElement(name, "//a[normalize-space(text())='" + name + "']/../..//input[@type='button']");
+            }
+            
             orderpage.SetElement("cartbutton", "//li[@id='topcartlink']//a");
-            FillList();
         }
         [Test, Order(1), Description("Добавление 3 книг в корзину, проверка что они есть в корзине и их удаление")]
         public void AddToCartTest()
