@@ -73,16 +73,16 @@ namespace NUnitTestProject1.Tests
             Assert.IsTrue(laptopexist, "Товара нет в корзине");
         }
 
-        [Description("Добавление товара в корзину и переход в корзину")]
-        private void AddToCart()
+        [Test, Description("Добавление товара в корзину и переход в корзину")]
+        public void AddToCart()
         {
             driver.FindElement(By.XPath("//input[@value='Add to cart']")).Click();
             Wait();
             driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
         }
 
-        [Description("Проверка наличия товара в корзине, проверка ввода полей и наличия информации после ввода")]
-        private void Check()
+        [Test, Description("Проверка наличия товара в корзине, проверка ввода полей и наличия информации после ввода")]
+        public void Check()
         {
             CheckCart();
             SetFields("Canada", "Nunavut", "9898");
@@ -91,11 +91,5 @@ namespace NUnitTestProject1.Tests
             CheckInform();
         }
 
-        [Test, Description("Проверка добавления товара в корзину и заполнения полей")]
-        public void TestLaptop()
-        {
-            AddToCart();
-            this.Check();
-        }
     }
 }

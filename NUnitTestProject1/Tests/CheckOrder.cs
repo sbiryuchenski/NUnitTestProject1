@@ -40,9 +40,10 @@ namespace NUnitTestProject1.Tests
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@id='bar-notification']")));
             driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
-            Check(name1);
-            Check(name2);
-            Check(name3);
+            foreach (string name in books)
+            {
+                Check(name);
+            }
             driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../../td[@class='qty nobr']/input"));// Нахожу input для Fiction
             driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../..//span[@class='product-unit-price']"));// Нахожу Price
             driver.FindElement(By.XPath("//a[normalize-space(text())='Fiction']/../..//span[@class='product-subtotal']"));// Нахожу Total
