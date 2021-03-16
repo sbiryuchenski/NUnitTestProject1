@@ -12,10 +12,11 @@ using OpenQA.Selenium.Support.UI;
 
 namespace NUnitTestProject1.Tests
 {
-    [TestFixture("Fiction", "Science", "Health Book"), Description("Проверка добавления товаров в корзину")]
+    [TestFixture("Fiction", "Science", "Computing and Internet"), Description("Проверка добавления товаров в корзину")]
     class CheckOrder:BaseTest
     {
         string name1, name2, name3;
+        List<string> books;
         public CheckOrder(string name1, string name2, string name3)
         {
             this.name1 = name1;
@@ -53,9 +54,9 @@ namespace NUnitTestProject1.Tests
         }
         private void DeleteAllFromCart(params string[] names)
         {
-            for(int i = 0; i<names.Length; i++)
+            foreach(string name in books)
             {
-                driver.FindElement(By.XPath("//a[normalize-space(text())='" + names[i] + "']/../..//input[@type='checkbox']")).Click();
+                driver.FindElement(By.XPath("//a[normalize-space(text())='" + name + "']/../..//input[@type='checkbox']")).Click();
             }
             driver.FindElement(By.XPath("//input[@name='updatecart']")).Click();
         }
@@ -68,12 +69,17 @@ namespace NUnitTestProject1.Tests
         {
             driver.Url = "http://demowebshop.tricentis.com/books";
         }
+        private void FillList()
+        {
+            books = new List<string>() { name1, name2, name3 };
+        }
         public override void FillDictionary()
         {
             orderpage.SetElement("fiction", "//a[normalize-space(text())='" + name1 + "']/../..//input[@type='button']");
             orderpage.SetElement("science", "//a[normalize-space(text())='" + name2 + "']/../..//input[@type='button']");
             orderpage.SetElement("health", "//a[normalize-space(text())='" + name3 + "']/../..//input[@type='button']");
             orderpage.SetElement("cartbutton", "//li[@id='topcartlink']//a");
+            FillList();
         }
         [Test, Order(1), Description("Добавление 3 книг в корзину, проверка что они есть в корзине и их удаление")]
         public void AddToCartTest()

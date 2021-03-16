@@ -13,7 +13,7 @@ using OpenQA.Selenium.Support.UI;
 namespace NUnitTestProject1.Tests
 {
     [TestFixture, Description("Добавляю ноутбук в корзину и проверяю что он там есть")]
-    class CheckLaptopOrder :BaseTest
+    class CheckLaptopOrder:BaseTest
     {
         SelectElement selectcountry;
         SelectElement selectstate;

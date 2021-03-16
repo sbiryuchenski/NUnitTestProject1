@@ -40,5 +40,9 @@ namespace NUnitTestProject1
             element.Clear();
             element.SendKeys(text);
         }
+        public IWebElement Get()
+        {
+            return element;
+        }
     }
 }

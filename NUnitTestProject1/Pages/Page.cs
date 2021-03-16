@@ -27,6 +27,11 @@ namespace NUnitTestProject1
         {
             FillDictionary(xpath, name);
         }
+        public IWebElement GetElement(string name)
+        {
+            IWebElement element = webelement[name].Get();
+            return element;
+        }
 
     }
 }
