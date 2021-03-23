@@ -16,6 +16,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture("Medium", "2 GB", "320 GB"), Description("Check default values and price color")]
     class CheckDefaultValues:BaseTest
     {
+        string param = "default ";
         List<string> defaultvalue = new List<string>();
         Page computerpage;
         string red = "rgba(184, 7, 9, 1)";
@@ -36,16 +37,19 @@ namespace NUnitTestProject1.Tests
         public override void FillDictionary()
         {
             computerpage.SetElement("price", "//span[@itemprop='price']");
-            foreach( string name in defaultvalue)
+            foreach(string name in defaultvalue)
             {
                 computerpage.SetElement(name, "//label[contains(text(),'" + name + "')]/../input");
+                computerpage.SetElement(param+name, "//label[contains(text(),'" + name + "')]/../input");
             }
+
         }
         private void CheckDefault(string name)// Логика проверки значений по умолчанию
         {
             string checkvalue = computerpage.webelement[name].Get().GetAttribute("Checked");
+            string actualvalue = computerpage.webelement[param + name].Get().Text;
             bool check = (checkvalue == "true");
-            Assert.IsTrue(check, "Значение " + name + " не является значением по умолчанию");
+            Assert.IsTrue(check, "Выбрано значение " + actualvalue + " по умолчанию вместо " + name);
         }
         [Test, Description("Проверяет, что цвет цены красный")]
         public void PriceColorTest()

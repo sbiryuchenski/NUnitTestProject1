@@ -44,5 +44,9 @@ namespace NUnitTestProject1
         {
             return element;
         }
+        public string GetText()
+        {
+            return element.Text;
+        }
     }
 }
