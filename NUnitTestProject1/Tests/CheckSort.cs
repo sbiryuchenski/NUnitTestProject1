@@ -17,10 +17,6 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Проверка сортировки")]
     class CheckSort:BaseTest
     {
-        List<string> names = new List<string>();
-        List<string> prices = new List<string>();
-        List<string> sortednames = new List<string>();
-        List<string> sortedprices = new List<string>();
         bool reverse = false;
 
         public override void SetURL()
