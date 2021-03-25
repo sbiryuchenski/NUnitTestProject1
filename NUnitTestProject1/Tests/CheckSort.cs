@@ -17,6 +17,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Проверка сортировки")]
     class CheckSort:BaseTest
     {
+       
         bool reverse = false;
 
         public override void SetURL()
