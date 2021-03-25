@@ -12,7 +12,6 @@ using System.Configuration;
 
 namespace NUnitTestProject1
 {
-    
     public abstract class BaseTest
     {
         protected IWebDriver driver;
@@ -80,7 +79,7 @@ namespace NUnitTestProject1
 
         protected virtual void Check(string check)// Проверка соответствия URL
         {
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='page-title']")));// Ждупока отобразится заголовок страницы
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='page-title']")));// Жду пока отобразится заголовок страницы
             string url = driver.Url;
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
         }

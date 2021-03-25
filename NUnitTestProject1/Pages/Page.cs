@@ -16,7 +16,7 @@ namespace NUnitTestProject1
         IWebDriver driver;
         public IWebElement element;
 
-        public Dictionary<string, Element> webelement = new Dictionary<string, Element>();// Словарь, в котором хранятся все элементы страницыЫ
+        public Dictionary<string, Element> webelement = new Dictionary<string, Element>();// Словарь, в котором хранятся все элементы страницы
         public Page(IWebDriver setdriver) { driver = setdriver; }
         private void FillDictionary(string xpath, string name)// Метод, добавляющий элемент в словарь
         {

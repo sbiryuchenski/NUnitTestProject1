@@ -10,6 +10,7 @@ using System;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NUnitTestProject1.Tests
 {
@@ -20,6 +21,7 @@ namespace NUnitTestProject1.Tests
         List<string> prices = new List<string>();
         List<string> sortednames = new List<string>();
         List<string> sortedprices = new List<string>();
+        bool reverse = false;
 
         public override void SetURL()
         {
@@ -33,25 +35,17 @@ namespace NUnitTestProject1.Tests
             order.SelectByText(key);
         }
 
-        private void GetAllNames()
+        private void GetAllNames(bool reverse)
         {
-           var nameelements = driver.FindElements(By.XPath("//h2[@class='product-title']/a"));
-           foreach(var name in nameelements)
-            {
-                names.Add(name.Text);
-            }
-            sortednames = names;
-            sortednames.Sort();
+            if (reverse) { var sortednames = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderByDescending(n => n) select n; }
+            else { var sortednames = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderBy(n => n) select n; }
+            var names = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")) select n;
         }
-        private void GetAllPrices()
+        private void GetAllPrices(bool reverse)
         {
-            var priceelements = driver.FindElements(By.XPath("//span[@class='price actual-price']"));
-            foreach(var price in priceelements)
-            {
-                prices.Add(price.Text);
-            }
-            sortedprices = prices;
-            sortedprices.Sort();
+            if (reverse) { var sortedprices = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderByDescending(n => n) select n; }
+            else { var sortedprices = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderBy(n => n) select n; }
+            var prices = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")) select n;
         }
         private void Clear(List<string> one, List<string> two)
         {
@@ -61,8 +55,9 @@ namespace NUnitTestProject1.Tests
         [Test, Order(1), Description("Проверка сортировки по имени A-Z")]
         public void CheckNamesAZ()
         {
+            reverse = false;
             SetSort("Name: A to Z");
-            GetAllNames();
+            GetAllNames(reverse);
             Assert.AreEqual(sortednames, names, "Сортировка по имени A-Z работает не так как ожидалось");
             names.Clear();
             sortednames.Clear();
@@ -70,26 +65,27 @@ namespace NUnitTestProject1.Tests
         [Test, Order(2), Description("Проверка сортировки по имени Z-A")]
         public void CheckNamesZA()
         {
+            reverse = true;
             SetSort("Name: Z to A");
-            GetAllNames();
-            sortednames.Reverse();
+            GetAllNames(reverse);
             Assert.AreEqual(sortednames, names, "Сортировка по имени Z-A работает не так как ожидалось");
             Clear(names, sortednames);
         }
         [Test, Order(3), Description("Проверка сортировки по цене Low to Hign")]
         public void CheckPriceLowToHigh()
         {
+            reverse = false;
             SetSort("Price: Low to High");
-            GetAllPrices();
+            GetAllPrices(reverse);
             Assert.AreEqual(prices, sortedprices, "Сортировка по цене Low to High работает не так, как ожидалось");
             Clear(prices, sortedprices);
         }
         [Test, Order(4), Description("Проверка сортировки по цене High to Low")]
         public void CheckPriceHighToLow()
         {
+            reverse = true;
             SetSort("Price: High to Low");
-            GetAllPrices();
-            sortedprices.Reverse();
+            GetAllPrices(reverse);
             Assert.AreEqual(prices, sortedprices, "Сортировка по цене High to Low работает не так, как ожидалось");
             Clear(prices, sortedprices);
         }
