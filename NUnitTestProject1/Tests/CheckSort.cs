@@ -17,11 +17,6 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Проверка сортировки")]
     class CheckSort:BaseTest
     {
-        List<string> sortednames = new List<string>();
-        List<string> names = new List<string>();
-        List<string> sortedprices = new List<string>();
-        List<string> prices = new List<string>();
-
         bool reverse = false;
 
         public override void SetURL()
@@ -36,59 +31,46 @@ namespace NUnitTestProject1.Tests
             order.SelectByText(key);
         }
 
-        private void GetAllNames(bool reverse)
+        private void TestSort(string xpath, bool isSort, string sortkey)
         {
-            if (reverse) { var sortednames = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderByDescending(n => n) select n; }
-            else { var sortednames = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderBy(n => n) select n; }
-            var names = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")) select n;
+            var elements = driver.FindElements(By.XPath(xpath));
+            var sortedelements = elements.Select(t => t.Text).OrderBy(t => t);
+            if (isSort) { sortedelements = elements.Select(t => t.Text).OrderByDescending(t => t); }
+            var notsortedelements = elements.Select(t => t.Text);
+            Assert.AreEqual(notsortedelements, sortedelements, "Сортировка "+sortkey+" работает не так, как ожидалось");
         }
-        private void GetAllPrices(bool reverse)
-        {
-            if (reverse) { var sortedprices = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderByDescending(n => n) select n; }
-            else { var sortedprices = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")).OrderBy(n => n) select n; }
-            var prices = from n in driver.FindElements(By.XPath("//h2[@class='product-title']/a")) select n;
-        }
-        private void Clear(List<string> one, List<string> two)
-        {
-            one.Clear();
-            two.Clear();
-        }
+
         [Test, Order(1), Description("Проверка сортировки по имени A-Z")]
         public void CheckNamesAZ()
         {
             reverse = false;
-            SetSort("Name: A to Z");
-            GetAllNames(reverse);
-            Assert.AreEqual(sortednames, names, "Сортировка по имени A-Z работает не так как ожидалось");
-            names.Clear();
-            sortednames.Clear();
+            string sortkey = "Name: A to Z";
+            SetSort(sortkey);
+            TestSort("//h2[@class='product-title']/a", reverse, sortkey);
         }
         [Test, Order(2), Description("Проверка сортировки по имени Z-A")]
         public void CheckNamesZA()
         {
             reverse = true;
-            SetSort("Name: Z to A");
-            GetAllNames(reverse);
-            Assert.AreEqual(sortednames, names, "Сортировка по имени Z-A работает не так как ожидалось");
-            Clear(names, sortednames);
+            string sortkey = "Name: Z to A";
+            SetSort(sortkey);
+            TestSort("//h2[@class='product-title']/a", reverse, sortkey);
         }
         [Test, Order(3), Description("Проверка сортировки по цене Low to Hign")]
         public void CheckPriceLowToHigh()
         {
             reverse = false;
-            SetSort("Price: Low to High");
-            GetAllPrices(reverse);
-            Assert.AreEqual(prices, sortedprices, "Сортировка по цене Low to High работает не так, как ожидалось");
-            Clear(prices, sortedprices);
+            string sortkey = "Price: Low to High";
+            SetSort(sortkey);
+            TestSort("//span[@class='price actual-price']", reverse, sortkey);
         }
         [Test, Order(4), Description("Проверка сортировки по цене High to Low")]
         public void CheckPriceHighToLow()
         {
             reverse = true;
-            SetSort("Price: High to Low");
-            GetAllPrices(reverse);
-            Assert.AreEqual(prices, sortedprices, "Сортировка по цене High to Low работает не так, как ожидалось");
-            Clear(prices, sortedprices);
+            string sortkey = "Price: High to Low";
+            SetSort(sortkey);
+            TestSort("//span[@class='price actual-price']", reverse, sortkey);
         }
     }
 }
