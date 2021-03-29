@@ -12,7 +12,7 @@ using System.Configuration;
 
 namespace NUnitTestProject1.Tests
 {
-    [TestFixture]
+    [TestFixture, Description("Проверка наличия товара в корзине после нажатия update cart")]
     class CheckCartUpdate:BaseTest
     {
         string bookname = "Fiction";
@@ -42,16 +42,16 @@ namespace NUnitTestProject1.Tests
             var bookcount = driver.FindElements(By.XPath("//a[normalize-space(text())='" + check + "']")).Count > 0;
             Assert.IsTrue(bookcount, "Товара " + check + " нет в корзине после update cart");
         }
-        [Test, Order(1)]
-        public void CheckFirstAdd()
+        private void FirstAdd()
         {
             var addbutton = SetElement("//input[@value='Add to cart']");
             addbutton.Click();
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
         }
-        [Test, Order(2)]
+        [Test, Order(2), Description("Добавление элемента в корзину, нажатие кнопки и проверка наличия")]
         public void CheckInCart()
         {
+            FirstAdd();
             SwitchTab(cartpage);
             driver.Url = "http://demowebshop.tricentis.com/cart";
             SwitchTab(bookpage);
