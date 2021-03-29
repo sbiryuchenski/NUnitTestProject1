@@ -31,13 +31,26 @@ namespace NUnitTestProject1.Tests
             order.SelectByText(key);
         }
 
+        
+
         private void TestSort(string xpath, bool isSort, string sortkey)
         {
+            string expected = "";
+            string fact = "";
             var elements = driver.FindElements(By.XPath(xpath));
-            var sortedelements = elements.Select(t => t.Text).OrderBy(t => t);
+            var sortedelements = elements.Select(t => t.Text);
             if (isSort) { sortedelements = elements.Select(t => t.Text).OrderByDescending(t => t); }
+            else { sortedelements = elements.Select(t => t.Text).OrderBy(t => t); }
             var notsortedelements = elements.Select(t => t.Text);
-            Assert.AreEqual(notsortedelements, sortedelements, "Сортировка "+sortkey+" работает не так, как ожидалось");
+            foreach(string str in sortedelements)
+            {
+                expected = expected + str + " ";
+            }
+            foreach (string str in notsortedelements)
+            {
+                fact = fact + str + " ";
+            }
+            Assert.AreEqual(notsortedelements, sortedelements, "Сортировка " + sortkey + " работает не так, как ожидалось\nОжидалось " + expected + "\nВстречено " + fact);
         }
 
         [Test, Order(1), Description("Проверка сортировки по имени A-Z")]

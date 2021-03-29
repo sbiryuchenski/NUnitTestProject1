@@ -52,6 +52,10 @@ namespace NUnitTestProject1
         public virtual void InitPage()
         {
         }
+        public virtual IWebElement SetElement(string xpath)
+        {
+            return driver.FindElement(By.XPath(xpath));
+        }
         public virtual void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/";
