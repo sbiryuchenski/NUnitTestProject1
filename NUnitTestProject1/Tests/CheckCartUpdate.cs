@@ -9,6 +9,7 @@ using OpenQA.Selenium.Interactions;
 using System;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
+using System.Linq;
 
 namespace NUnitTestProject1.Tests
 {
@@ -21,17 +22,15 @@ namespace NUnitTestProject1.Tests
         public override void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/books";
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             bookpage = driver.CurrentWindowHandle;
+        }
+        private void OpenNewTab(string url)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("window.open()");
-            var windows = driver.WindowHandles;
-            foreach(string w in windows)
-            {
-                if(w!=bookpage)
-                {
-                    cartpage = w;
-                }
-            }
+            cartpage = driver.WindowHandles.Where(s => s != bookpage).Single();
+            SwitchTab(cartpage);
+            driver.Url = url;
         }
         private void SwitchTab(string tab)
         {
@@ -52,8 +51,7 @@ namespace NUnitTestProject1.Tests
         public void CheckInCart()
         {
             FirstAdd();
-            SwitchTab(cartpage);
-            driver.Url = "http://demowebshop.tricentis.com/cart";
+            OpenNewTab("http://demowebshop.tricentis.com/cart");
             SwitchTab(bookpage);
             var addbutton = SetElement("//a[normalize-space(text())='"+ bookname +"']/../..//input[@value='Add to cart']");
             addbutton.Click();
