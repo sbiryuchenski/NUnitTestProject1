@@ -22,7 +22,7 @@ namespace NUnitTestProject1.Tests
         SelectElement selectstate;
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/notebooks";
+            driver.SetUrl("http://demowebshop.tricentis.com/notebooks");
         }
 
         [Description("Ввод страны")]

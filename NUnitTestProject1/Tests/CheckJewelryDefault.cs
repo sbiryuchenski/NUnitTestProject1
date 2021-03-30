@@ -31,7 +31,7 @@ namespace NUnitTestProject1.Tests
         }
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/create-it-yourself-jewelry";
+            driver.SetUrl("http://demowebshop.tricentis.com/create-it-yourself-jewelry");
         }
         public override void FillDictionary()
         {

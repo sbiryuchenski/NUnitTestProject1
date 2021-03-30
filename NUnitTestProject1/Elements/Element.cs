@@ -16,7 +16,7 @@ namespace NUnitTestProject1
         public Element(IWebDriver setdriver) { driver = setdriver; }
         public void SetElement(string xpath)
         {
-            element = driver.FindElement(By.XPath(xpath));
+            element = driver.FindByXpath(xpath);
         }
         /// <summary>
         /// Клик по элементу

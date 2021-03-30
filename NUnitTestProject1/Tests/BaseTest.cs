@@ -97,7 +97,7 @@ namespace NUnitTestProject1
         
         protected virtual void MoveOnTab(string i)
         {
-            movetab = driver.FindElement(By.XPath("//a[normalize-space(text())='" + i + "']"));
+            movetab = driver.FindByXpath("//a[normalize-space(text())='" + i + "']");
             Actions move = new Actions(driver);
             move.MoveToElement(movetab).Build().Perform();
         }
@@ -109,7 +109,7 @@ namespace NUnitTestProject1
         protected virtual void Check(string check)// Проверка соответствия URL
         {
             Waiting.WaitForAnimation(pagetitle);// Жду пока отобразится заголовок страницы
-            string url = driver.Url;
+            string url = driver.GetUrl();
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
         }
         protected void InputText(string box, string input)

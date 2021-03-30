@@ -22,7 +22,7 @@ namespace NUnitTestProject1.Tests
 
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/books";
+            driver.SetUrl("http://demowebshop.tricentis.com/books");
         }
 
         private void SetSort(string key)

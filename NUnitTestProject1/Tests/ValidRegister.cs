@@ -18,7 +18,7 @@ namespace NUnitTestProject1
         string urlafter;
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/register";
+            driver.SetUrl( "http://demowebshop.tricentis.com/register");
             SetButton();
         }
         protected override void Check(string errmess)

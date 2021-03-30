@@ -71,7 +71,7 @@ namespace NUnitTestProject1.Tests
         }
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/books";
+            driver.SetUrl("http://demowebshop.tricentis.com/books");
         }
         
         public override void FillDictionary()

@@ -16,7 +16,7 @@ namespace NUnitTestProject1
         #region Utils
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/register";
+            driver.SetUrl("http://demowebshop.tricentis.com/register");
         }
         Page regpage;
         public override void InitPage()

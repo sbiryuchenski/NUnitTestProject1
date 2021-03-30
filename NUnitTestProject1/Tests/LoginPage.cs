@@ -20,7 +20,7 @@ namespace NUnitTestProject1.Tests
         WebDriverWait wait;
         public override void SetURL()
         {
-            driver.Url = "http://demowebshop.tricentis.com/login";
+            driver.SetUrl("http://demowebshop.tricentis.com/login");
         }
         Page logpage;
         public override void InitPage()
