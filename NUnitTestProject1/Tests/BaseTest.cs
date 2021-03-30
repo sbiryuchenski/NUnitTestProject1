@@ -20,6 +20,7 @@ namespace NUnitTestProject1
         protected IWebElement textbox;
         protected IWebElement button;
         protected WebDriverWait wait;
+        string pagetitle = "//div[@class='page-title']";
 
         [OneTimeSetUp, Order(0)]
         public void Initialization() // Инициализация браузера, страницы и элементов на странице
@@ -107,7 +108,7 @@ namespace NUnitTestProject1
         /// <param name="check"></param>
         protected virtual void Check(string check)// Проверка соответствия URL
         {
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='page-title']")));// Жду пока отобразится заголовок страницы
+            Waiting.WaitForAnimation(pagetitle);// Жду пока отобразится заголовок страницы
             string url = driver.Url;
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
         }

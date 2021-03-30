@@ -16,6 +16,8 @@ namespace NUnitTestProject1.Tests
     class CheckLaptopOrder:BaseTest
     {
         #region Utils
+        string loadimg = "//div[@class='loading-image']";
+        string barimg = "//div[@id='bar-notification']";
         SelectElement selectcountry;
         SelectElement selectstate;
         public override void SetURL()
@@ -33,15 +35,15 @@ namespace NUnitTestProject1.Tests
         [Description("Ожидание для следующего действия")]
         private void Wait()
         {
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@id='bar-notification']")));
+            Waiting.WaitForAnimation(loadimg);
+            Waiting.WaitForAnimation(barimg);
         }
 
         [Description("Ввод штата")]
 
         private void SetState(string statename)
         {
-            wait.Until(ExpectedConditions.ElementExists(By.XPath("//select[@class='state-input']//*[text()='Nunavut']")));
+            Waiting.WaitForExist("//select[@class='state-input']//*[text()='Nunavut']");
             selectstate = new SelectElement(driver.FindElement(By.XPath("//select[@class='state-input']")));
             selectstate.SelectByText(statename);
         }

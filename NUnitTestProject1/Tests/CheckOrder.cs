@@ -16,6 +16,8 @@ namespace NUnitTestProject1.Tests
     class CheckOrder:BaseTest
     {
         #region Utils
+        string baranim = "//div[@id='bar-notification']";
+        string loadanim = "//div[@class='loading-image']";
         List<string> books = new List<string>();
         public CheckOrder(string name1, string name2, string name3)
         {
@@ -28,7 +30,7 @@ namespace NUnitTestProject1.Tests
             foreach(string name in books)
             {
                 orderpage.webelement[name].Click();
-                wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
+                Waiting.WaitForAnimation(loadanim);
             }
 
         }
@@ -39,7 +41,7 @@ namespace NUnitTestProject1.Tests
         }
         private void CheckBooksInCart()
         {
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@id='bar-notification']")));
+            Waiting.WaitForAnimation(baranim);
             driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
             foreach (string name in books)
             {
