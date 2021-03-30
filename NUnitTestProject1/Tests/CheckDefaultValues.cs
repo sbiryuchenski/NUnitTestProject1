@@ -16,6 +16,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture("Medium", "2 GB", "320 GB"), Description("Check default values and price color")]
     class CheckDefaultValues:BaseTest
     {
+        #region Utils
         string param = "default ";
         List<string> defaultvalue = new List<string>();
         Page computerpage;
@@ -51,13 +52,16 @@ namespace NUnitTestProject1.Tests
             bool check = (checkvalue == "true");
             Assert.IsTrue(check, "Выбрано значение " + actualvalue + " по умолчанию вместо " + name);
         }
-        [Test, Description("Проверяет, что цвет цены красный")]
+        #endregion
+       
+        [Test, Description("Проверяет, что цвет цены красный"), Order(1)]
         public void PriceColorTest()
         {
             string color = computerpage.webelement["price"].Get().GetCssValue("color");
             Assert.AreEqual(red, color, "Цвет цены не красный");
         }
-        [Test, Description("Проверяет дефолтные значения")]
+
+        [Test, Description("Проверяет дефолтные значения"), Order(2)]
         public void TestDefault()// Здесь defaultvalue это список со значениями, которые должны быть по дефолту
         {
             foreach(string name in defaultvalue)

@@ -13,6 +13,7 @@ namespace NUnitTestProject1
     [TestFixture, Description("Проверка валидности пустого ввода полей на странице регистрации с помощью паттерна")]
     public class RegistrerPageValidTest : BaseTest
     {
+        #region Utils
         public override void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/register";
@@ -58,6 +59,8 @@ namespace NUnitTestProject1
             regpage.webelement["password"].Input("PaSsWoRd123");
             regpage.webelement["confirmpassword"].Input("PaSsWoRd123");
         }
+        #endregion
+        
         [Test, Order(1), Description("Проверка пустых полей")]
         public void ClearCheck()
         {
@@ -71,22 +74,22 @@ namespace NUnitTestProject1
         {
             Test("name", "name", "regbutton", "Имя не прошло проверку");
         }
-        [Test, Order(2), Description("Проверка при отсутствии фамилии")]
+        [Test, Order(3), Description("Проверка при отсутствии фамилии")]
         public void LastNameCheck()
         {
             Test("lastname", "lastname", "regbutton", "Фамилия не прошла проверку");
         }
-        [Test, Order(3), Description("Проверка  при отсутствии эл.почты")]
+        [Test, Order(4), Description("Проверка  при отсутствии эл.почты")]
         public void EmailCheck()
         {
             Test("email", "email@email.com", "regbutton", "Эл.почта не прошла проверку");
         }
-        [Test, Order(4), Description("Проверка при отсутствии пароля")]
+        [Test, Order(5), Description("Проверка при отсутствии пароля")]
         public void PasswordCheck()
         {
             Test("password", "PaSsWoRd123", "regbutton", "Пароль не прошёл проверку");
         }
-        [Test, Order(5), Description("Проверка при отсутствии подтверждения пароля")]
+        [Test, Order(6), Description("Проверка при отсутствии подтверждения пароля")]
         public void ConfirmPasswordCheck()
         {
             Test("password", "PaSsWoRd123", "regbutton", "Повтор пароля не прошёл проверку");

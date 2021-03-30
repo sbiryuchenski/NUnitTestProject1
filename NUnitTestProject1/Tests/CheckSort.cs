@@ -17,6 +17,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Проверка сортировки")]
     class CheckSort:BaseTest
     {
+        #region Utils
         bool reverse = false;
 
         public override void SetURL()
@@ -30,8 +31,6 @@ namespace NUnitTestProject1.Tests
             SelectElement order = new SelectElement(orderelement);
             order.SelectByText(key);
         }
-
-        
 
         private void TestSort(string xpath, bool isSort, string sortkey)
         {
@@ -53,6 +52,8 @@ namespace NUnitTestProject1.Tests
             Assert.AreEqual(notsortedelements, sortedelements, "Сортировка " + sortkey + " работает не так, как ожидалось\nОжидалось " + expected + "\nВстречено " + fact);
         }
 
+        #endregion
+        
         [Test, Order(1), Description("Проверка сортировки по имени A-Z")]
         public void CheckNamesAZ()
         {

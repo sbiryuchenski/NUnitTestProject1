@@ -48,21 +48,37 @@ namespace NUnitTestProject1
             FillDictionary();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Создаю новое ожидание
         }
-
+        /// <summary>
+        /// Инициализация элементов на странице. Выполняется один раз при запуске тест класса
+        /// </summary>
         public virtual void InitPage()
         {
         }
+        /// <summary>
+        ///  Находит элемент на странице по Xpath и возвращает объект типа IWebElement
+        /// </summary>
+        /// <param name="xpath">Xpath селектор</param>
+        /// <returns>Переменная IWebElement</returns>
         public virtual IWebElement SetElement(string xpath)
         {
             return driver.FindElement(By.XPath(xpath));
         }
+
+        /// <summary>
+        /// Set Url to driver
+        /// </summary>
         public virtual void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/";
         }
+
+        /// <summary>
+        /// Fill dictionary that contains WebElements of the page
+        /// </summary>
         public virtual void FillDictionary()
         {
         }
+
         protected virtual string SetPath()// Установка пути к элементу на странице
         {
             string path = "//a[normalize-space(text())='";
@@ -74,6 +90,10 @@ namespace NUnitTestProject1
             tab = driver.FindElement(By.XPath(path + i + "']"));
             tab.Click();
         }
+        /// <summary>
+        /// Навести курсор на элемент 
+        /// </summary>
+        
         protected virtual void MoveOnTab(string i)
         {
             movetab = driver.FindElement(By.XPath("//a[normalize-space(text())='" + i + "']"));
@@ -81,6 +101,10 @@ namespace NUnitTestProject1
             move.MoveToElement(movetab).Build().Perform();
         }
 
+        /// <summary>
+        /// Сравнение ОР и ФР и генерирование исключения
+        /// </summary>
+        /// <param name="check"></param>
         protected virtual void Check(string check)// Проверка соответствия URL
         {
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='page-title']")));// Жду пока отобразится заголовок страницы
@@ -106,5 +130,6 @@ namespace NUnitTestProject1
         {
             driver.Close();
         }
+       
     }
 }

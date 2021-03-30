@@ -18,15 +18,26 @@ namespace NUnitTestProject1
 
         public Dictionary<string, Element> webelement = new Dictionary<string, Element>();// Словарь, в котором хранятся все элементы страницы
         public Page(IWebDriver setdriver) { driver = setdriver; }
+
         private void FillDictionary(string xpath, string name)// Метод, добавляющий элемент в словарь
         {
             webelement.Add(name, new Element(driver));
             webelement[name].SetElement(xpath);
         }
+        /// <summary>
+        /// Добавить WebElement в словарь webelemetnt
+        /// </summary>
+        /// <param name="name">Имя элемента</param>
+        /// <param name="xpath">Xpath селектор</param>
         public void SetElement(string name, string xpath)// Добавить элемент в словарь из другого класса
         {
             FillDictionary(xpath, name);
         }
+        /// <summary>
+        /// Получить элемент из словаря
+        /// </summary>
+        /// <param name="name">Имя элемента в словаре</param>
+        /// <returns>Тип IWebElement</returns>
         public IWebElement GetElement(string name)
         {
             IWebElement element = webelement[name].Get();

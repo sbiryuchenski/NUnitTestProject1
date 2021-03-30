@@ -16,6 +16,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture("None"), Description("Проверка дефолтных параметров заказа jewelry")]
     class CheckJewelryDefault:BaseTest
     {
+        #region Utils
         SelectElement material;
         string expectedpendant;
         string expectedmaterial = "Gold (0,5 mm)";
@@ -57,6 +58,8 @@ namespace NUnitTestProject1.Tests
             bool check = text.Contains(expectedpendant);
             Assert.IsTrue(check, "Параметр Pendant должен быть " + expectedpendant + " вместо " + text);
         }
+        #endregion
+        
         [Test, Description("Сам тесткейс")]
         public void CheckDefault()
         {

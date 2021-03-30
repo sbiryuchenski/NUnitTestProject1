@@ -13,6 +13,7 @@ namespace NUnitTestProject1
     [TestFixture, Description("Проверка валидности пустых обязательных полей на странице регистрации")]
     class ValidRegister:BaseTest
     {
+        #region Utils
         string urlbefore;
         string urlafter;
         public override void SetURL()
@@ -33,6 +34,8 @@ namespace NUnitTestProject1
             InputText("Password", "PaSsWoRd123");
             InputText("ConfirmPassword", "PaSsWoRd123");
         }
+        #endregion
+        
 
         [Test, Order(0), Description("0. Все поля пустые")]
         public void CheckClear()

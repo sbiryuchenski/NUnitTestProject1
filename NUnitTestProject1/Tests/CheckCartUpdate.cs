@@ -16,6 +16,8 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Проверка наличия товара в корзине после нажатия update cart")]
     class CheckCartUpdate:BaseTest
     {
+        #region Utils
+
         string bookname = "Fiction";
         string cartpage;
         string bookpage;
@@ -32,7 +34,7 @@ namespace NUnitTestProject1.Tests
             SwitchTab(cartpage);
             driver.Url = url;
         }
-        private void SwitchTab(string tab)
+        private void SwitchTab(string tab)// Переключить браузер на нужную вкладку
         {
             driver.SwitchTo().Window(tab);
         }
@@ -47,6 +49,8 @@ namespace NUnitTestProject1.Tests
             addbutton.Click();
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
         }
+        #endregion
+
         [Test, Order(2), Description("Добавление элемента в корзину, нажатие кнопки и проверка наличия")]
         public void CheckInCart()
         {

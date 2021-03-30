@@ -14,6 +14,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Проврека входа в учётную запись")]
     class LoginPage:BaseTest
     {
+        #region Utils
         private string urlbefore;
         private string urlafter;
         WebDriverWait wait;
@@ -48,6 +49,8 @@ namespace NUnitTestProject1.Tests
             logpage.SetElement("password", "//input[@Name='Password']");
             logpage.SetElement("logbutton", "//input[@value='Log in']");
         }
+        #endregion
+        
         [Test, Order(1), Description("Тест с неправильными данными для входа")]
         public void LoginWrongTest()
         {

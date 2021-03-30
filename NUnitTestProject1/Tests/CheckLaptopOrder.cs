@@ -15,6 +15,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture, Description("Добавляю ноутбук в корзину и проверяю что он там есть")]
     class CheckLaptopOrder:BaseTest
     {
+        #region Utils
         SelectElement selectcountry;
         SelectElement selectstate;
         public override void SetURL()
@@ -73,7 +74,9 @@ namespace NUnitTestProject1.Tests
             Assert.IsTrue(laptopexist, "Товара нет в корзине");
         }
 
-        [Test, Description("Добавление товара в корзину и переход в корзину")]
+        #endregion
+        
+        [Test, Order(1), Description("Добавление товара в корзину и переход в корзину")]
         public void AddToCart()
         {
             driver.FindElement(By.XPath("//input[@value='Add to cart']")).Click();
@@ -81,7 +84,7 @@ namespace NUnitTestProject1.Tests
             driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
         }
 
-        [Test, Description("Проверка наличия товара в корзине, проверка ввода полей и наличия информации после ввода")]
+        [Test, Order(2), Description("Проверка наличия товара в корзине, проверка ввода полей и наличия информации после ввода")]
         public void Check()
         {
             CheckCart();

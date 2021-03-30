@@ -15,6 +15,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture("Fiction", "Health Book", "Computing and Internet"), Description("Проверка добавления товаров в корзину")]
     class CheckOrder:BaseTest
     {
+        #region Utils
         List<string> books = new List<string>();
         public CheckOrder(string name1, string name2, string name3)
         {
@@ -80,6 +81,8 @@ namespace NUnitTestProject1.Tests
             
             orderpage.SetElement("cartbutton", "//li[@id='topcartlink']//a");
         }
+        #endregion
+       
         [Test, Order(1), Description("Добавление 3 книг в корзину, проверка что они есть в корзине и их удаление")]
         public void AddToCartTest()
         {
