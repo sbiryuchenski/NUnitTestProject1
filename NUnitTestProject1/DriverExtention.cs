@@ -45,5 +45,9 @@ namespace NUnitTestProject1
         {
             driver.SwitchTo().Window(tab);
         }
+        static public int CountElements(this IWebDriver driver, string xpath)
+        {
+            return driver.FindElements(By.XPath(xpath)).Count();
+        }
     }
 }

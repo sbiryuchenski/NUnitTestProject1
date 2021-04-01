@@ -18,6 +18,7 @@ namespace NUnitTestProject1.Tests
     [TestFixture]
     class CheckSearch:BaseTest
     {
+        #region 
         Page searchpg;
         SelectElement category;
         public override void InitPage()
@@ -25,9 +26,56 @@ namespace NUnitTestProject1.Tests
             driver.SetUrl("http://demowebshop.tricentis.com/search");            
             searchpg = new Page(driver);
         }
-        private void SetItem(string value)
+        private string SetItem(string value)// Установить значение элементу в category
         {
             new SelectElement(searchpg.WebElement("category")).SelectByValue(value);
+            return new SelectElement(searchpg.WebElement("category")).SelectedOption.Text;
+        }
+        private void CheckCategory(string check)
+        {
+            bool ch = driver.CountElements("//h2[@class='product-title']/a")>0;
+            if(check == "Computers" || check.Contains("Desktops") || check == "All")
+            {
+                Assert.IsTrue(ch, "При выборе параметра " + check + " и вводе в поиск слова \"computer\" нет результатов поиска");
+            }
+            else
+            {
+                Assert.IsFalse(ch, "При выборе параметра " + check + " и вводе в поиск слова \"computer\" есть результаты поиска");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inp">Что было введено</param>
+        /// <param name="result">Должен ли быть при этом результат поиска</param>
+        private void CheckInput(string inp, bool result)
+        {
+            bool check = driver.CountElements("//strong[@class='warning']") > 0;
+            if (result)
+            {
+                Assert.IsFalse(check, "При вводе \"" + inp + "\" нет результата");
+            }
+            else
+            {
+                Assert.IsTrue(check, "При вводе \"" + inp + "\" в поиске нет сообщения об ошибке");
+            }
+        }
+        private void CheckLongInput()
+        {
+            bool check = driver.CountElements("//strong[@class='result']") > 0;
+            Assert.IsTrue(check, "При вводе очень длинной строки нет сообщения об ошибке");
+        }
+        private void InputSearchText(string text)
+        {
+            searchpg.WebElement("searchbox").Clear();
+            searchpg.WebElement("searchbox").SendKeys(text);
+            searchpg.WebElement("search").Click();
+        }
+
+        private void InputLongText(int n)// Генерация очень длинной строки
+        {
+            searchpg.WebElement("searchbox").SendKeys(new string('a', n));
+            searchpg.WebElement("search").Click();
         }
 
         public override void FillDictionary()
@@ -44,10 +92,12 @@ namespace NUnitTestProject1.Tests
             searchpg.SetElementLocator("searchdescr", "//input[@id='Sid']");
             searchpg.SetElementLocator("search", "//input[@class='button-1 search-button']");
         }
+        #endregion
 
-        [Test, Order(1)]
+        [Test, Order(1), Description("Проверяет отображение результатов при выборе категории")]
         public void CategoryTest()
         {
+            string curtext;
             searchpg.WebElement("searchbox").SendKeys("Computer");
             var selected = category.Options;
             //var values = selected.Select(s => s.s.GetAttribute("value"));
@@ -57,12 +107,34 @@ namespace NUnitTestProject1.Tests
             {
                 values.Add(s.GetAttribute("value"));
             }
+
             foreach(string val in values)
             {
-                SetItem(val);
+                curtext = SetItem(val);
                 searchpg.WebElement("search").Click();
-
+                CheckCategory(curtext);
             }
+        }
+        [Test, Order(2), Description("Проверяет различне длины слов при вводе в search")]
+        public void WrongInputTest()
+        {
+            searchpg.WebElement("search").Click();
+            CheckInput(" ", false);
+
+            InputSearchText("c");
+            CheckInput("c", false);
+
+            InputSearchText("co");
+            CheckInput("co", false);
+
+            InputSearchText("com");
+            CheckInput("com", true);
+        }
+        [Test, Order(3), Description("Проверка ввода очень длинной строки в поиск")]
+        public void LongInputTest()
+        {
+            InputLongText(2000);
+            CheckLongInput();
         }
     }
 }
