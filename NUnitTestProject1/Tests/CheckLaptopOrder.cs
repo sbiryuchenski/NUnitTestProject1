@@ -35,15 +35,15 @@ namespace NUnitTestProject1.Tests
         [Description("Ожидание для следующего действия")]
         private void Wait()
         {
-            Waiting.WaitForAnimation(loadimg);
-            Waiting.WaitForAnimation(barimg);
+            Waiting.WaitForAnimation(driver, loadimg);
+            Waiting.WaitForAnimation(driver, barimg);
         }
 
         [Description("Ввод штата")]
 
         private void SetState(string statename)
         {
-            Waiting.WaitForExist("//select[@class='state-input']//*[text()='Nunavut']");
+            Waiting.WaitForExist(driver, "//select[@class='state-input']//*[text()='Nunavut']");
             selectstate = new SelectElement(driver.FindElement(By.XPath("//select[@class='state-input']")));
             selectstate.SelectByText(statename);
         }

@@ -9,6 +9,7 @@ using OpenQA.Selenium.Interactions;
 using System;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
+using System.Linq;
 
 namespace NUnitTestProject1
 {
@@ -29,6 +30,20 @@ namespace NUnitTestProject1
         static public IWebElement FindByCss(this IWebDriver driver, string css)
         {
             return driver.FindElement(By.CssSelector(css));
+        }
+        static public string OpenNewTab(this IWebDriver driver, string url)
+        {
+            string currentwindow = driver.CurrentWindowHandle;
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript("window.open()");
+            string newwindow = driver.WindowHandles.Where(s => s != currentwindow).Single();
+            SwitchTab(driver, newwindow);
+            driver.Url = url;
+            return newwindow;
+        }
+        static public void SwitchTab(this IWebDriver driver, string tab)// Переключить браузер на нужную вкладку
+        {
+            driver.SwitchTo().Window(tab);
         }
     }
 }

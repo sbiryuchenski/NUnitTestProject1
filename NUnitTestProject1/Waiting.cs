@@ -15,19 +15,14 @@ namespace NUnitTestProject1
     [Description("Ожидания")]
     static class Waiting
     {
-        static WebDriverWait wait;
-        /// <summary>
-        /// Ожидать окончания анимации
-        /// </summary>
-        /// <param name="xpath">Селектор элемента анимации</param>
-        static public void WaitForAnimation(string xpath)
+        static public void WaitForAnimation(IWebDriver driver, string xpath)
         {
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(xpath)));
+            (new WebDriverWait(driver, TimeSpan.FromSeconds(10))).Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(xpath)));
         }
 
-        static public void WaitForExist(string xpath)
+        static public void WaitForExist(IWebDriver driver, string xpath)
         {
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(xpath)));
+            (new WebDriverWait(driver, TimeSpan.FromSeconds(10))).Until(ExpectedConditions.ElementExists(By.XPath(xpath)));
         }
     }
 }

@@ -30,7 +30,7 @@ namespace NUnitTestProject1.Tests
             foreach(string name in books)
             {
                 orderpage.webelement[name].Click();
-                Waiting.WaitForAnimation(loadanim);
+                Waiting.WaitForAnimation(driver, loadanim);
             }
 
         }
@@ -41,7 +41,7 @@ namespace NUnitTestProject1.Tests
         }
         private void CheckBooksInCart()
         {
-            Waiting.WaitForAnimation(baranim);
+            Waiting.WaitForAnimation(driver, baranim);
             driver.FindElement(By.XPath("//li[@id='topcartlink']//a")).Click();
             foreach (string name in books)
             {

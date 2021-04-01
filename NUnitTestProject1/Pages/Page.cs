@@ -17,6 +17,7 @@ namespace NUnitTestProject1
         public IWebElement element;
 
         public Dictionary<string, Element> webelement = new Dictionary<string, Element>();// Словарь, в котором хранятся все элементы страницы
+        public Dictionary<string, string> webpath = new Dictionary<string, string>();
         public Page(IWebDriver setdriver) { driver = setdriver; }
 
         private void FillDictionary(string xpath, string name)// Метод, добавляющий элемент в словарь
@@ -25,13 +26,21 @@ namespace NUnitTestProject1
             webelement[name].SetElement(xpath);
         }
         /// <summary>
-        /// Добавить WebElement в словарь webelemetnt
+        /// Добавить WebElement в словарь webelement
         /// </summary>
         /// <param name="name">Имя элемента</param>
         /// <param name="xpath">Xpath селектор</param>
         public void SetElement(string name, string xpath)// Добавить элемент в словарь из другого класса
         {
             FillDictionary(xpath, name);
+        }
+        public IWebElement WebElement(string name)
+        {
+            return driver.FindByXpath(webpath[name]);
+        }
+        public void SetElementLocator(string name, string xpath)
+        {
+            webpath.Add(name, xpath);
         }
         /// <summary>
         /// Получить элемент из словаря

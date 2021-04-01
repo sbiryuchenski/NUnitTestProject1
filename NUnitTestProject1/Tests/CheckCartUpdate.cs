@@ -21,23 +21,13 @@ namespace NUnitTestProject1.Tests
         string bookname = "Fiction";
         string cartpage;
         string bookpage;
+        string loadimg = "//div[@class='loading-image']";
         public override void SetURL()
         {
             driver.Url = "http://demowebshop.tricentis.com/books";
             bookpage = driver.CurrentWindowHandle;
         }
-        private void OpenNewTab(string url)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript("window.open()");
-            cartpage = driver.WindowHandles.Where(s => s != bookpage).Single();
-            SwitchTab(cartpage);
-            driver.Url = url;
-        }
-        private void SwitchTab(string tab)// Переключить браузер на нужную вкладку
-        {
-            driver.SwitchTo().Window(tab);
-        }
+       
         protected override void Check(string check)
         {
             var bookcount = driver.FindElements(By.XPath("//a[normalize-space(text())='" + check + "']")).Count > 0;
@@ -47,7 +37,7 @@ namespace NUnitTestProject1.Tests
         {
             var addbutton = SetElement("//input[@value='Add to cart']");
             addbutton.Click();
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='loading-image']")));
+            Waiting.WaitForAnimation(driver, loadimg);
         }
         #endregion
 
@@ -55,17 +45,17 @@ namespace NUnitTestProject1.Tests
         public void CheckInCart()
         {
             FirstAdd();
-            OpenNewTab("http://demowebshop.tricentis.com/cart");
-            SwitchTab(bookpage);
+            cartpage = driver.OpenNewTab("http://demowebshop.tricentis.com/cart");
+            driver.SwitchTab(bookpage);
             var addbutton = SetElement("//a[normalize-space(text())='"+ bookname +"']/../..//input[@value='Add to cart']");
             addbutton.Click();
-            SwitchTab(cartpage);
+            driver.SwitchTab(cartpage);
             var updatebutton = SetElement("//input[@name='updatecart']");
             updatebutton.Click();
             Check(bookname);
-            SwitchTab(bookpage);
+            driver.SwitchTab(bookpage);
             driver.Close();
-            SwitchTab(cartpage);
+            driver.SwitchTab(cartpage);
         }
     }
 }

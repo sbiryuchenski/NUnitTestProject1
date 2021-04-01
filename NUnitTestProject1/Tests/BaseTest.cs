@@ -108,7 +108,7 @@ namespace NUnitTestProject1
         /// <param name="check"></param>
         protected virtual void Check(string check)// Проверка соответствия URL
         {
-            Waiting.WaitForAnimation(pagetitle);// Жду пока отобразится заголовок страницы
+            Waiting.WaitForAnimation(driver, pagetitle);// Жду пока отобразится заголовок страницы
             string url = driver.GetUrl();
             Assert.IsTrue(url.Contains(check), "URL не совпадает с ожидаемым");
         }
