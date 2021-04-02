@@ -77,7 +77,27 @@ namespace NUnitTestProject1.Tests
             searchpg.WebElement("searchbox").SendKeys(new string('a', n));
             searchpg.WebElement("search").Click();
         }
+        private void CheckPrice()
+        {
+            bool ch = driver.CountElements("//span[@class='price actual-price']") > 0;
+            Assert.IsTrue(ch, "Не отображаются результаты поиска если поставить фильтр по цене");
+        }
 
+
+        private void CheckPriceFrom(string pricestr)
+        {
+            int price = int.Parse(pricestr);
+            var elements = driver.FindElements(By.XPath("//span[@class='price actual-price']"));
+            var prices = elements.Select(p => float.Parse(p.Text)).Where(p => p>=price).Count()>0;
+            Assert.IsTrue(prices, "При установке цены от " + pricestr + " нет верных результатов поиска");
+        }
+        private void CheckPriceTo(string pricestr)
+        {
+            int price = int.Parse(pricestr);
+            var elements = driver.FindElements(By.XPath("//span[@class='price actual-price']"));
+            var prices = elements.Select(p => float.Parse(p.Text)).Where(p => p <= price).Count() > 0;
+            Assert.IsTrue(prices, "При установке цены до " + pricestr + " нет верных результатов поиска");
+        }
         public override void FillDictionary()
         {
             searchpg.SetElementLocator("advanced", "//input[@name='As']");
@@ -135,6 +155,22 @@ namespace NUnitTestProject1.Tests
         {
             InputLongText(2000);
             CheckLongInput();
+        }
+        [Test, Order(4), Description("Проверка границ цены")]
+        public void PriceTest()
+        {
+            string price = "1000";
+            searchpg.WebElement("searchbox").Clear();
+            searchpg.WebElement("searchbox").SendKeys("Computer");
+            searchpg.WebElement("pricefrom").SendKeys(price);
+            searchpg.WebElement("search").Click();
+            CheckPrice();
+            CheckPriceFrom(price);
+            searchpg.WebElement("pricefrom").Clear();
+            searchpg.WebElement("priceto").SendKeys(price);
+            searchpg.WebElement("search").Click();
+            CheckPrice();
+            CheckPriceTo(price);
         }
     }
 }
