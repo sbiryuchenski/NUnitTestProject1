@@ -13,7 +13,7 @@ namespace NUnitTestProject1
 {
     public class Page
     {
-        IWebDriver driver;
+        public IWebDriver driver;
         public IWebElement element;
 
         public Dictionary<string, Element> webelement = new Dictionary<string, Element>();// Словарь, в котором хранятся все элементы страницы

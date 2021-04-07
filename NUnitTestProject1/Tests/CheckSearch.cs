@@ -19,12 +19,14 @@ namespace NUnitTestProject1.Tests
     class CheckSearch:BaseTest
     {
         #region 
-        Page searchpg;
+        
         SelectElement category;
+        SearchPage searchpg;
         public override void InitPage()
         {
             driver.SetUrl("http://demowebshop.tricentis.com/search");            
-            searchpg = new Page(driver);
+            searchpg = new SearchPage(driver);
+            category = new SelectElement(searchpg.WebElement("category"));
         }
         private string SetItem(string value)// Установить значение элементу в category
         {
@@ -98,20 +100,7 @@ namespace NUnitTestProject1.Tests
             var prices = elements.Select(p => float.Parse(p.Text)).Where(p => p <= price).Count() > 0;
             Assert.IsTrue(prices, "При установке цены до " + pricestr + " нет верных результатов поиска");
         }
-        public override void FillDictionary()
-        {
-            searchpg.SetElementLocator("advanced", "//input[@name='As']");
-            searchpg.WebElement("advanced").Click();
-            searchpg.SetElementLocator("searchbox", "//input[@class='search-text']");
-            searchpg.SetElementLocator("category", "//select[@id='Cid']");
-            category = new SelectElement(searchpg.WebElement("category"));
-            searchpg.SetElementLocator("manufacturer", "//select[@id='Mid']");
-            searchpg.SetElementLocator("pricefrom", "//input[@id='Pf']");
-            searchpg.SetElementLocator("priceto", "//input[@id='Pt']");
-            searchpg.SetElementLocator("searchsub", "//input[@id='Isc']");
-            searchpg.SetElementLocator("searchdescr", "//input[@id='Sid']");
-            searchpg.SetElementLocator("search", "//input[@class='button-1 search-button']");
-        }
+        
         #endregion
 
         [Test, Order(1), Description("Проверяет отображение результатов при выборе категории")]
