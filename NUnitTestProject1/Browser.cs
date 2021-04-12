@@ -9,7 +9,7 @@ namespace NUnitTestProject1
     {
         public enum BrowserType
         {
-            Chrome = 1, IE
+            Chrome = 1, IE, Firefox, Edge
         }
 
         public BrowserType GetBrowser()

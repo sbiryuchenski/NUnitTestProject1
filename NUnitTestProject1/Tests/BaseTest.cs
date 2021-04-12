@@ -2,6 +2,8 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Edge;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -38,6 +40,15 @@ namespace NUnitTestProject1
                     options.PageLoadStrategy = PageLoadStrategy.None;
                     driver = new InternetExplorerDriver(path, options, TimeSpan.FromSeconds(5));
                     break;
+                case Browser.BrowserType.Firefox:
+                    FirefoxOptions optionsfox = new FirefoxOptions();
+                    optionsfox.PageLoadStrategy = PageLoadStrategy.Normal;
+                    // optionsfox.BrowserExecutableLocation = "C:/Pr0ogram Files/Mozilla Firefox";
+                    driver = new FirefoxDriver(path);
+                    break;
+                case Browser.BrowserType.Edge:
+                    driver = new EdgeDriver(path);
+                    break;
                 default:
                     throw new Exception("Указан неверный браузер в файле конфигурации");
 
@@ -47,7 +58,7 @@ namespace NUnitTestProject1
             driver.SwitchTo().Window(driver.CurrentWindowHandle);
             InitPage();
             FillDictionary();
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Создаю новое ожидание
+            //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Создаю новое ожидание
         }
         /// <summary>
         /// Инициализация элементов на странице. Выполняется один раз при запуске тест класса
