@@ -25,10 +25,11 @@ namespace NUnitTestProject1.Tests
         [Test]
         public void LoginTest()
         {
-            logpage.SetLogin("123@321.com");
-            logpage.SetPassword("123321");
             var url = driver.Url;
-            logpage.Login();
+            logpage.Email("123@321.com")
+                .Password("123321")
+                .Login();
+
             Assert.AreEqual(url, driver.Url, "Вход в учётную запись не выполняется");
         }
     }

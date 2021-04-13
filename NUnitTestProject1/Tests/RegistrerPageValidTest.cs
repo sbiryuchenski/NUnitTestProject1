@@ -26,16 +26,7 @@ namespace NUnitTestProject1
         protected string urlbefore;
         protected string urlafter;
 
-        public override void FillDictionary()
-        {
-            regpage.SetElement("name", "//input[@Name='FirstName']");
-            regpage.SetElement("lastname", "//input[@Name='LastName']");
-            regpage.SetElement("email", "//input[@Name='Email']");
-            regpage.SetElement("password", "//input[@Name='Password']");
-            regpage.SetElement("confirmpassword", "//input[@Name='ConfirmPassword']");
-            regpage.SetElement("regbutton", "//input[@Name='register-button']");
-            regpage.SetElement("gender", "//input[@id='gender-female']");
-        }
+        
 
         private void Test(string deletename, string deletevalue, string buttonname, string error)
         {// deletename - имя элемента, из которого нужно удалить текст. deletevalue - значение удаляемого элемента

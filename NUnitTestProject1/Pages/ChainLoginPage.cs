@@ -19,33 +19,24 @@ namespace NUnitTestProject1
         {
             driver = searchdriver;
         }
-
         private IWebElement WebElement(string xpath)
         {
             return driver.FindByXpath(xpath);
         }
-        /// <summary>
-        /// Установить email
-        /// </summary>
-        /// <param name="login"></param>
-        public void SetLogin(string login)
+        public ChainLoginPage Email(string log)
         {
-            WebElement("//input[@class='login']").SendKeys(login);
-        }
-        /// <summary>
-        /// Установить пароль
-        /// </summary>
-        /// <param name="password"></param>
-        public void SetPassword(string password)
+            WebElement("//input[@class='login']").SendKeys(log);
+            return this;
+        }             
+        public ChainLoginPage Password(string password)
         {
-            WebElement("//input[@class='password']").SendKeys(password);
+            WebElement("//input[@class='login']").SendKeys(password);
+            return this;
         }
-        /// <summary>
-        /// Нажать на кнопку Login
-        /// </summary>
-        public void Login()
+        public ChainLoginPage Login()
         {
             WebElement("//input[@value='Log in']").Click();
+            return this;
         }
     }
 }

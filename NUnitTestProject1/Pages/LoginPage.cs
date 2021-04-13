@@ -13,19 +13,13 @@ using System.Collections.Generic;
 
 namespace NUnitTestProject1
 {
-    class SearchPage:Page
+    class LoginPage:Page
     {
-        public IWebDriver driver;
-        /// <summary>
-        /// Содержит элементы страницы поиска
-        /// </summary>
-        /// <param name="searchdriver">driver</param>
-        public SearchPage(IWebDriver searchdriver):base(searchdriver)
+        public LoginPage(IWebDriver searchdriver) : base(searchdriver)
         {
             driver = searchdriver;
             driver.FindByXpath("//input[@id='As']").Click();
         }
-
 
         Dictionary<string, string> webpath = new Dictionary<string, string>
         {
@@ -36,28 +30,17 @@ namespace NUnitTestProject1
             {"priceto", "//input[@id='Pt']" },
             {"searchsub", "//input[@id='Isc']" },
             {"searchdescr", "//input[@id='Sid']" },
-            {"search", "//input[@class='button-1 search-button']" }
+            {"search", "//input[@class='button-1 search-button']" },
+            { "email", "//input[@Name='Email']" },
+            {"password", "//input[@Name='Password']" },
+            {"logbutton", "//input[@value='Log in']" },
         };
-        /// <summary>
-        /// Возвращает Элемент страницы
-        /// </summary>
-        /// <param name="name">Имя элемента</param>
-        /// <returns></returns>
+
         public IWebElement WebElement(string name)
         {
             return driver.FindByXpath(webpath[name]);
         }
 
-        /// <summary>
-        /// Возвращает Select element
-        /// </summary>
-        /// <param name="name">Имя элемента</param>
-        /// <returns></returns>
-        public SelectElement SelectWebElement(string name)
-        {
-            return new SelectElement(driver.FindByXpath(webpath[name]));
-        }
+        public 
     }
-
-    
 }

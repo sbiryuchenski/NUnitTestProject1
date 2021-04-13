@@ -12,7 +12,7 @@ using OpenQA.Selenium.Support.UI;
 namespace NUnitTestProject1.Tests
 { 
     [TestFixture, Description("Проврека входа в учётную запись")]
-    class LoginPage:BaseTest
+    class CheckLoginPage:BaseTest
     {
         #region Utils
         private string urlbefore;
@@ -22,16 +22,15 @@ namespace NUnitTestProject1.Tests
         {
             driver.SetUrl("http://demowebshop.tricentis.com/login");
         }
-        Page logpage;
+        LoginPage logpage;
         public override void InitPage()
         {
-            logpage = new Page(driver); 
+            logpage = new LoginPage(driver); 
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));// Инициализация ожидания
         }
         private void CheckUrlWrong(string errormessage)
         {
             Assert.IsTrue(urlafter.Contains(urlbefore), errormessage);
-
         }
         private void CheckUrlTrue(string errormessage)
         {
@@ -40,30 +39,25 @@ namespace NUnitTestProject1.Tests
         private void LogButtonClick()
         {
             urlbefore = driver.Url;
-            logpage.webelement["logbutton"].Click();
+            logpage.WebElement("logbutton").Click();
             urlafter = driver.Url;
         }
-        public override void FillDictionary()
-        {
-            logpage.SetElement("email", "//input[@Name='Email']");
-            logpage.SetElement("password", "//input[@Name='Password']");
-            logpage.SetElement("logbutton", "//input[@value='Log in']");
-        }
+
         #endregion
         
         [Test, Order(1), Description("Тест с неправильными данными для входа")]
         public void LoginWrongTest()
         {
-            logpage.webelement["email"].Input("123");
-            logpage.webelement["password"].Input("123");
+            logpage.WebElement("email").SendKeys("123");
+            logpage.WebElement("password").SendKeys("123");
             LogButtonClick();
             CheckUrlWrong("Тест с неверными данными для входа не прошёл проверку");
         }
         [Test, Order(2), Description("Тест с верными данными для входа")]
         public void LoginTrueTest()
         {
-            logpage.webelement["email"].Rewrite("email@email.email");
-            logpage.webelement["password"].Rewrite("PaSsWoRd123");
+            logpage.WebElement("email").Rewrite("email@email.email");
+            logpage.WebElement("password").Rewrite("PaSsWoRd123");
             LogButtonClick();
             CheckUrlTrue("Тест с верными данными для входа не прошёл проверку");
         }

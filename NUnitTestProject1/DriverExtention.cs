@@ -49,5 +49,11 @@ namespace NUnitTestProject1
         {
             return driver.FindElements(By.XPath(xpath)).Count();
         }
+
+        static public void Rewrite(this IWebElement element, string text)
+        {
+            element.Clear();
+            element.SendKeys(text);
+        }
     }
 }

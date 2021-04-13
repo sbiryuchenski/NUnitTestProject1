@@ -16,27 +16,25 @@ using System.Collections.Generic;
 namespace NUnitTestProject1.Tests
 {
     [TestFixture]
-    class CheckSearch:BaseTest
+    class CheckSearch : BaseTest
     {
         #region 
-        
-        SelectElement category;
+
         SearchPage searchpg;
         public override void InitPage()
         {
-            driver.SetUrl("http://demowebshop.tricentis.com/search");            
+            driver.SetUrl("http://demowebshop.tricentis.com/search");
             searchpg = new SearchPage(driver);
-            category = new SelectElement(searchpg.WebElement("category"));
         }
         private string SetItem(string value)// Установить значение элементу в category
         {
-            new SelectElement(searchpg.WebElement("category")).SelectByValue(value);
-            return new SelectElement(searchpg.WebElement("category")).SelectedOption.Text;
+            searchpg.SelectWebElement("category").SelectByValue(value);
+            return searchpg.SelectWebElement("category").SelectedOption.Text;
         }
         private void CheckCategory(string check)
         {
-            bool ch = driver.CountElements("//h2[@class='product-title']/a")>0;
-            if(check == "Computers" || check.Contains("Desktops") || check == "All")
+            bool ch = driver.CountElements("//h2[@class='product-title']/a") > 0;
+            if (check == "Computers" || check.Contains("Desktops") || check == "All")
             {
                 Assert.IsTrue(ch, "При выборе параметра " + check + " и вводе в поиск слова \"computer\" нет результатов поиска");
             }
@@ -90,7 +88,7 @@ namespace NUnitTestProject1.Tests
         {
             int price = int.Parse(pricestr);
             var elements = driver.FindElements(By.XPath("//span[@class='price actual-price']"));
-            var prices = elements.Select(p => float.Parse(p.Text)).Where(p => p>=price).Count()>0;
+            var prices = elements.Select(p => float.Parse(p.Text)).Where(p => p >= price).Count() > 0;
             Assert.IsTrue(prices, "При установке цены от " + pricestr + " нет верных результатов поиска");
         }
         private void CheckPriceTo(string pricestr)
@@ -100,7 +98,7 @@ namespace NUnitTestProject1.Tests
             var prices = elements.Select(p => float.Parse(p.Text)).Where(p => p <= price).Count() > 0;
             Assert.IsTrue(prices, "При установке цены до " + pricestr + " нет верных результатов поиска");
         }
-        
+
         #endregion
 
         [Test, Order(1), Description("Проверяет отображение результатов при выборе категории")]
@@ -108,16 +106,16 @@ namespace NUnitTestProject1.Tests
         {
             string curtext;
             searchpg.WebElement("searchbox").SendKeys("Computer");
-            var selected = category.Options;
+            var selected = searchpg.SelectWebElement("category").Options;
             //var values = selected.Select(s => s.s.GetAttribute("value"));
             List<string> values = new List<string>();
-            
-            foreach(IWebElement s in selected)
+
+            foreach (IWebElement s in selected)
             {
                 values.Add(s.GetAttribute("value"));
             }
 
-            foreach(string val in values)
+            foreach (string val in values)
             {
                 curtext = SetItem(val);
                 searchpg.WebElement("search").Click();
@@ -139,15 +137,16 @@ namespace NUnitTestProject1.Tests
             InputSearchText("com");
             CheckInput("com", true);
         }
-        [Test, Order(3), Description("Проверка ввода очень длинной строки в поиск")]
+        [Test, Order(4), Description("Проверка ввода очень длинной строки в поиск")]
         public void LongInputTest()
         {
             InputLongText(2000);
             CheckLongInput();
         }
-        [Test, Order(4), Description("Проверка границ цены")]
+        [Test, Order(3), Description("Проверка границ цены")]
         public void PriceTest()
         {
+            InitPage();
             string price = "1000";
             searchpg.WebElement("searchbox").Clear();
             searchpg.WebElement("searchbox").SendKeys("Computer");
