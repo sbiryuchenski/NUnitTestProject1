@@ -11,6 +11,8 @@ using OpenQA.Selenium.Interactions;
 using System;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
+using Microsoft.Extensions.Configuration;
+
 
 namespace NUnitTestProject1
 {
@@ -24,7 +26,7 @@ namespace NUnitTestProject1
         protected WebDriverWait wait;
         string pagetitle = "//div[@class='page-title']";
 
-        [OneTimeSetUp, Order(0)]
+        [OneTimeSetUp, Order(0)]//
         public void Initialization() // Инициализация браузера, страницы и элементов на странице
         {
             Browser browsertype = new Browser();
@@ -51,7 +53,6 @@ namespace NUnitTestProject1
                     break;
                 default:
                     throw new Exception("Указан неверный браузер в файле конфигурации");
-
             }
             //driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
             SetURL();
