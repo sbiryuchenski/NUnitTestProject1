@@ -32,7 +32,7 @@ namespace NUnitTestProject1
         }
         public bool WindowParams()
         {
-            string ismax = (string)j["isMaximize"].ToString();
+            string ismax = (string)j["isMaximize"].ToString(); 
             return bool.Parse(ismax);
         }
         public int WindowWidth()
