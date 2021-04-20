@@ -15,16 +15,35 @@ namespace NUnitTestProject1
         {
             Chrome = 1, IE, Firefox, Edge
         }
+        JObject j;
+        private void ReadFromJson()
+        {
+            StreamReader reader = File.OpenText("config.json");
+            j = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+        }
 
         public BrowserType GetBrowser()
         {
-            StreamReader reader = File.OpenText("config.json");
-            JObject j = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-            string browsername = (string)j["browser"].ToString();
+            ReadFromJson();
+            string browsername = (string)j["Browser"].ToString();
             string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).FilePath;
-            string s = "";
             BrowserType browser = (BrowserType)Enum.Parse(typeof(BrowserType), browsername);
             return browser;
+        }
+        public bool WindowParams()
+        {
+            string ismax = (string)j["isMaximize"].ToString();
+            return bool.Parse(ismax);
+        }
+        public int WindowWidth()
+        {
+            string width = (string)j["Width"].ToString();
+            return int.Parse(width);
+        }
+        public int WindowHeigt()
+        {
+            string heigt = (string)j["Height"].ToString();
+            return int.Parse(heigt);
         }
     }
 }

@@ -1,3 +1,6 @@
 {
-  "browser" : "Chrome"
+  "Browser": "Chrome",
+  "isMaximize": "true",
+  "Height": "100",
+  "Width": "100"
 }

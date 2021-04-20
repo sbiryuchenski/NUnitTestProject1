@@ -54,7 +54,14 @@ namespace NUnitTestProject1
                 default:
                     throw new Exception("Указан неверный браузер в файле конфигурации");
             }
-            //driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);// Ожидание загрузки страницы 5 секунд
+            if (browsertype.WindowParams())
+            {
+                driver.Manage().Window.Maximize();
+            }
+            else
+            {
+                driver.Manage().Window.Size = new System.Drawing.Size(browsertype.WindowWidth(), browsertype.WindowHeigt());
+            }
             SetURL();
             driver.SwitchTo().Window(driver.CurrentWindowHandle);
             InitPage();
