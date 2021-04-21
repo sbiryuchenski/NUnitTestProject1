@@ -40,27 +40,26 @@ namespace NUnitTestProject1
             }
 
 
-            Browser browsertype = new Browser();
             string path = Directory.GetCurrentDirectory();
-            Browser.BrowserType browser = (Browser.BrowserType)Enum.Parse(typeof(Browser.BrowserType), parameters.Browser);
+            BrowserType browser = (BrowserType)Enum.Parse(typeof(BrowserType), parameters.Browser);
             switch (browser)
             {
-                case Browser.BrowserType.Chrome:
+                case BrowserType.Chrome:
                     driver = new ChromeDriver(path);
                     break;
-                case Browser.BrowserType.IE:
+                case BrowserType.IE:
                     InternetExplorerOptions options = new InternetExplorerOptions();
                     options.PageLoadStrategy = PageLoadStrategy.None;
                     options.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
                     driver = new InternetExplorerDriver(path, options);
                     break;
-                case Browser.BrowserType.Firefox:
+                case BrowserType.Firefox:
                     FirefoxOptions optionsfox = new FirefoxOptions();
                     optionsfox.PageLoadStrategy = PageLoadStrategy.Normal;
                     // optionsfox.BrowserExecutableLocation = "C:/Pr0ogram Files/Mozilla Firefox";
                     driver = new FirefoxDriver(path);
                     break;
-                case Browser.BrowserType.Edge:
+                case BrowserType.Edge:
                     driver = new EdgeDriver(path);
                     break;
                 default:
