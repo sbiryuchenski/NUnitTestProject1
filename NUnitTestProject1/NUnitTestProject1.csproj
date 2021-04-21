@@ -18,9 +18,9 @@
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="90.0.4430.2400" />
-    <PackageReference Include="Selenium.WebDriver.IEDriver" Version="2.35.3" />
     <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="89.0.774.54" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="WebDriver.IEDriverServer.win32" Version="3.141.0" />
   </ItemGroup>
 
   <ItemGroup>

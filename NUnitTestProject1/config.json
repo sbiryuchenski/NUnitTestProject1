@@ -1,6 +1,6 @@
 {
   "Browser": "Chrome",
-  "isMaximize": "true",
-  "Height": "100",
-  "Width": "100"
+  "isMaximize": true,
+  "Height": 100,
+  "Width": 100
 }

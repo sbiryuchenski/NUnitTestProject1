@@ -11,6 +11,7 @@ using OpenQA.Selenium.Interactions;
 using System;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 
 
@@ -25,13 +26,23 @@ namespace NUnitTestProject1
         protected IWebElement button;
         protected WebDriverWait wait;
         string pagetitle = "//div[@class='page-title']";
+        Settings parameters;
 
         [OneTimeSetUp, Order(0)]//
         public void Initialization() // Инициализация браузера, страницы и элементов на странице
         {
+            using (FileStream fstream = File.OpenRead("config.json"))
+            {
+                byte[] array = new byte[fstream.Length];
+                fstream.Read(array, 0, array.Length);
+                string jsn = System.Text.Encoding.Default.GetString(array);
+                parameters = JsonSerializer.Deserialize<Settings>(jsn);
+            }
+
+
             Browser browsertype = new Browser();
             string path = Directory.GetCurrentDirectory();
-            Browser.BrowserType browser = browsertype.GetBrowser();
+            Browser.BrowserType browser = (Browser.BrowserType)Enum.Parse(typeof(Browser.BrowserType), parameters.Browser);
             switch (browser)
             {
                 case Browser.BrowserType.Chrome:
@@ -40,7 +51,8 @@ namespace NUnitTestProject1
                 case Browser.BrowserType.IE:
                     InternetExplorerOptions options = new InternetExplorerOptions();
                     options.PageLoadStrategy = PageLoadStrategy.None;
-                    driver = new InternetExplorerDriver(path, options, TimeSpan.FromSeconds(5));
+                    options.IntroduceInstabilityByIgnoringProtectedModeSettings = true;
+                    driver = new InternetExplorerDriver(path, options);
                     break;
                 case Browser.BrowserType.Firefox:
                     FirefoxOptions optionsfox = new FirefoxOptions();
@@ -54,13 +66,13 @@ namespace NUnitTestProject1
                 default:
                     throw new Exception("Указан неверный браузер в файле конфигурации");
             }
-            if (browsertype.WindowParams())
+            if (parameters.isMaximize)
             {
                 driver.Manage().Window.Maximize();
             }
             else
             {
-                driver.Manage().Window.Size = new System.Drawing.Size(browsertype.WindowWidth(), browsertype.WindowHeigt());
+                driver.Manage().Window.Size = new System.Drawing.Size(parameters.Width, parameters.Height);
             }
             SetURL();
             driver.SwitchTo().Window(driver.CurrentWindowHandle);
