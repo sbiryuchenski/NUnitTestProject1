@@ -4,23 +4,17 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using OpenQA.Selenium.Interactions;
 using System;
 using OpenQA.Selenium.Support.UI;
-using System.Configuration;
 
 namespace NUnitTestProject1
 {
     public abstract class BaseTest
     {
         protected IWebDriver driver;
-        protected IWebElement tab;
-        protected IWebElement movetab;
-        protected IWebElement textbox;
-        protected IWebElement button;
+
         protected WebDriverWait wait;
         string pagetitle = "//div[@class='page-title']";
 
@@ -43,7 +37,6 @@ namespace NUnitTestProject1
                 case Browser.BrowserType.Firefox:
                     FirefoxOptions optionsfox = new FirefoxOptions();
                     optionsfox.PageLoadStrategy = PageLoadStrategy.Normal;
-                    // optionsfox.BrowserExecutableLocation = "C:/Pr0ogram Files/Mozilla Firefox";
                     driver = new FirefoxDriver(path);
                     break;
                 case Browser.BrowserType.Edge:

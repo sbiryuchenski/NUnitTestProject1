@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System.Diagnostics;
-using System.IO;
-using OpenQA.Selenium.Interactions;
-
+﻿using NUnit.Framework;
 
 namespace NUnitTestProject1
 {
