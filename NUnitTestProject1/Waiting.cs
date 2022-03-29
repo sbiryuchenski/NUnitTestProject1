@@ -1,11 +1,12 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using System;
 using OpenQA.Selenium.Support.UI;
 
 namespace NUnitTestProject1
 {
-    [Description("Ожидания")]
+    /// <summary>
+    /// Класс с ожиданиями
+    /// </summary>
     static class Waiting
     {
         static public void WaitForAnimation(IWebDriver driver, string xpath)

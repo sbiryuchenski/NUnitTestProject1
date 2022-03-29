@@ -1,14 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.IE;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using OpenQA.Selenium.Interactions;
-using System;
-using OpenQA.Selenium.Support.UI;
-using System.Configuration;
+﻿using OpenQA.Selenium;
 using System.Linq;
 
 namespace NUnitTestProject1
@@ -49,8 +39,7 @@ namespace NUnitTestProject1
         {
             return driver.FindElements(By.XPath(xpath)).Count();
         }
-
-        static public void Rewrite(this IWebElement element, string text)
+        static public void ElementFill(this IWebElement element, string text)
         {
             element.Clear();
             element.SendKeys(text);
