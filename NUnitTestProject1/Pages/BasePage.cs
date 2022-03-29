@@ -11,15 +11,16 @@ using OpenQA.Selenium.Support.UI;
 using Shop.Test;
 using System.Linq;
 
-namespace NUnitTestProject1
+namespace NUnitTestProject1.Pages
 {
     /// <summary>
     /// Базовый класс страницы
     /// </summary>
     public class BasePage
     {
-        public Context Context { get; private set; }
-        BasePage(Context context)
+        protected Context Context;
+        public void Initialize(Context context) => Context = context;
+        public BasePage(Context context)
         {
             Context = context;
         }

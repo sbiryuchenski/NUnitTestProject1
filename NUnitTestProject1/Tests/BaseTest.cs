@@ -9,18 +9,18 @@ using OpenQA.Selenium.Interactions;
 using System;
 using Shop.Test;
 
-namespace NUnitTestProject1
+namespace NUnitTestProject1.Pages
 {
     /// <summary>
     /// Базовый класс тест кейса
     /// </summary>
-    public abstract class BaseTest
+    public abstract partial class BaseTest
     {
-        protected Context Context { get; }
+        public Context Context;
 
-        BaseTest(Context contex)
-        {
-            Context = contex;
-        }
+        //public BaseTest(Context contex)
+        //{
+        //    Context = contex;
+        //}
     }
 }
