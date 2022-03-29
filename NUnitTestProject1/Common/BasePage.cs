@@ -40,6 +40,31 @@ namespace NUnitTestProject1.Common
             else
                 return locator;
         }
-        
+
+        /// <summary>
+        /// Ввести текст в элемент
+        /// </summary>
+        /// <param name="locator"></param>
+        /// <param name="value"></param>
+        /// <param name="isClear"></param>
+        /// <returns></returns>
+        public BasePage ElementFill(By locator, string value, bool isClear = true)
+        {
+            UIController.ElementFill(Context, locator, value, isClear);
+            return this;
+        }
+        public virtual BasePage ElementFill(string element, string value, bool isClear = true) => ElementFill(GetElement(element), value, isClear);
+
+        /// <summary>
+        /// Клик по элементу
+        /// </summary>
+        /// <param name="locator"></param>
+        /// <returns></returns>
+        public BasePage ElementClick(By locator)
+        {
+            UIController.ElementClick(Context, locator);
+            return this;
+        }
+        public virtual BasePage ElementClick(string element) => ElementClick(GetElement(element));
     }
 }

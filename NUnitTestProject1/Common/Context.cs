@@ -22,8 +22,8 @@ namespace Shop.Test
         public IWebDriver Driver { get; private set; }
         public WebDriverWait Wait { get; private set; }
 
-        [OneTimeSetUp]
-        public void Initialization() // Инициализация браузера, файла настроек
+       // [OneTimeSetUp]
+        public Context() // Инициализация браузера, файла настроек
         {
             using (FileStream fstream = File.OpenRead("config.json"))
             {
@@ -69,11 +69,7 @@ namespace Shop.Test
             Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds((int)WaitTime.Normal)); // Создаю новое ожидание
         }
 
-        [OneTimeTearDown]
-        public void CloseBrowser()
-        {
-            Driver.Close();
-        }
+
 
     }
 }

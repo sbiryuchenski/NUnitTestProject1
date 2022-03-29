@@ -22,5 +22,12 @@ namespace NUnitTestProject1.Common
         //{
         //    Context = contex;
         //}
+        
+        [OneTimeTearDown]
+        public void CloseBrowser()
+        {
+            Context.Driver.Close();
+            var a = 13;
+        }
     }
 }
