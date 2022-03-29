@@ -1,10 +1,7 @@
-﻿using NUnitTestProject1.Pages;
-using NUnitTestProject1;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using NUnitTestProject1.Pages;
 
-namespace NUnitTestProject1.Pages
+namespace NUnitTestProject1.Common
 {
     public abstract partial class BaseTest
     {

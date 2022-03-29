@@ -9,7 +9,7 @@ using OpenQA.Selenium.Interactions;
 using System;
 using Shop.Test;
 
-namespace NUnitTestProject1.Pages
+namespace NUnitTestProject1.Common
 {
     /// <summary>
     /// Базовый класс тест кейса

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System.Diagnostics;
-using System.IO;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using Shop.Test;
 using System.Linq;
 
-namespace NUnitTestProject1.Pages
+namespace NUnitTestProject1.Common
 {
     /// <summary>
     /// Базовый класс страницы
@@ -25,7 +18,7 @@ namespace NUnitTestProject1.Pages
             Context = context;
         }
 
-        private List<UIMapper> Elements()
+        virtual public List<UIMapper> Elements()
         {
             List<UIMapper> elements = new List<UIMapper>
             {
