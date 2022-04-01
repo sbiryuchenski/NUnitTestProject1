@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace NUnitTestProject1
 {
+    // TODO: Проверить и удалить это недоразумение
     static class DriverExtention
     {
         static public void SetUrl(this IWebDriver driver, string url)

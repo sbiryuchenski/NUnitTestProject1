@@ -30,5 +30,10 @@
         /// Подтвердить
         /// </summary>
         public static string Confirm => "Confirm";
+        /// <summary>
+        /// Учётная запись
+        /// </summary>
+        public static string Account => "Accont";
+
     }
 }

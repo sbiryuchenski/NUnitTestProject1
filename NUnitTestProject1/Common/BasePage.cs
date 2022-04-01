@@ -80,5 +80,15 @@ namespace NUnitTestProject1.Common
             Assert.IsNotNull(element, $"Ожидалось, что элемент с локатором {locator} будет найден");
             return this;
         }
+
+        /// <summary>
+        /// Получить IWebElement
+        /// </summary>
+        /// <returns></returns>
+        public IWebElement GetWebElement(By locator)
+        {
+            return Waiting.WaitElementExist(Context, locator);
+        }
+        public IWebElement GetWebElement(string element) => GetWebElement(GetElement(element));
     }
 }

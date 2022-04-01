@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using NUnitTestProject1.Common;
 using OpenQA.Selenium;
 using NUnit.Framework;
+using NUnitTestProject1.Models;
+using NUnitTestProject1.Enums;
 
 namespace NUnitTestProject1.Pages
 {
@@ -55,5 +57,19 @@ namespace NUnitTestProject1.Pages
             return this;
         }
 
+        /// <summary>
+        /// Заполнить все поля
+        /// </summary>
+        /// <returns></returns>
+        public RegistrationPage FillAllFields(User user)
+        {
+            ElementClick(user.Gender == Gender.Male ? Fields.Male : Fields.Female);
+            ElementFill(Fields.FirstName, user.FirstName);
+            ElementFill(Fields.LastName, user.LastName);
+            ElementFill(Fields.Email, user.Email);
+            ElementFill(Fields.Password, user.Password);
+            ElementFill(Fields.Confirm, user.ConfirmPassword);
+            return this;
+        }
     }
 }

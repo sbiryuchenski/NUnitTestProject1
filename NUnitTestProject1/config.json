@@ -3,5 +3,7 @@
   "isMaximize": true,
   "Height": 100,
   "Width": 100,
-  "Url": "http://demowebshop.tricentis.com/"
+  "Url": "http://demowebshop.tricentis.com/",
+  "Email": "Testov.Test.Testovich@Test.test",
+  "Password": "WhoIsThatTester"
 }
