@@ -10,6 +10,8 @@ using System.Text.Json;
 using NUnitTestProject1;
 using NUnit.Framework;
 using NUnitTestProject1.Enums;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Shop.Test
 {
@@ -18,12 +20,11 @@ namespace Shop.Test
     /// </summary>
     public class Context
     {
-        public Settings Settings { get; set; }
+        public Settings Settings;
         public IWebDriver Driver { get; private set; }
         public WebDriverWait Wait { get; private set; }
 
-       // [OneTimeSetUp]
-        public Context() // Инициализация браузера, файла настроек
+        public Context(string browserName) // Инициализация браузера, файла настроек
         {
             using (FileStream fstream = File.OpenRead("config.json"))
             {
@@ -33,11 +34,15 @@ namespace Shop.Test
                 Settings = JsonSerializer.Deserialize<Settings>(jsn);
             }
 
+            //var configuration = new ConfigurationBuilder().AddJsonFile("config.json").Build();
+            //Settings = configuration.GetSection(nameof(Settings)).Get<Settings>();
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //string path = Directory.GetCurrentDirectory();
+
 
             // Наверное, давайте оставим только хром. 
             // Не вижу смысла делать кросс браузерное тестирование, как минимум в автотестах
-            string path = Directory.GetCurrentDirectory();
-            BrowserType browser = (BrowserType)Enum.Parse(typeof(BrowserType), Settings.Browser);
+            BrowserType browser = (BrowserType)Enum.Parse(typeof(BrowserType), browserName);
             switch (browser)
             {
                 case BrowserType.Chrome:
@@ -64,12 +69,9 @@ namespace Shop.Test
             }
             Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5); // Ожидание загрузки страницы 5 секунд
             Driver.SwitchTo().Window(Driver.CurrentWindowHandle);
-            if (Settings.isMaximize) Driver.Manage().Window.FullScreen();
+            if (Settings.isMaximize) Driver.Manage().Window.Maximize();
             Driver.Url = Settings.Url;
             Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds((int)WaitTime.Normal)); // Создаю новое ожидание
         }
-
-
-
     }
 }

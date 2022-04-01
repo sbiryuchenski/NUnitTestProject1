@@ -3,6 +3,7 @@ using System;
 using OpenQA.Selenium.Support.UI;
 using NUnitTestProject1.Enums;
 using Shop.Test;
+using NUnit.Framework;
 
 namespace NUnitTestProject1
 {
@@ -30,7 +31,16 @@ namespace NUnitTestProject1
         /// <returns></returns>
         static public IWebElement WaitElementExist(Context context, By locator)
         {
-            return new WebDriverWait(context.Driver, TimeSpan.FromSeconds((int)WaitTime.Normal)).Until(ExpectedConditions.ElementExists(locator));
+            IWebElement element = null;
+            try
+            {
+                element = new WebDriverWait(context.Driver, TimeSpan.FromSeconds((int)WaitTime.Normal)).Until(ExpectedConditions.ElementExists(locator));
+            }
+            catch
+            {
+                Assert.Fail($"Элемент с локатором {locator} не найден");
+            }
+            return element;
         }
 
         /// <summary>
@@ -41,8 +51,16 @@ namespace NUnitTestProject1
         /// <returns></returns>
         static public IWebElement WaitElementClickable(Context context, By locator)
         {
-            return new WebDriverWait(context.Driver, TimeSpan.FromSeconds((int)WaitTime.Normal)).Until(ExpectedConditions.ElementToBeClickable(locator));
-
+            IWebElement element = null;
+            try
+            {
+                element = new WebDriverWait(context.Driver, TimeSpan.FromSeconds((int)WaitTime.Normal)).Until(ExpectedConditions.ElementToBeClickable(locator));
+            }
+            catch
+            {
+                Assert.Fail($"Элемент с локатором {locator} не найден");
+            }
+            return element;
         }
     }
 }

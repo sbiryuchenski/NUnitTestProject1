@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using Shop.Test;
 using System.Linq;
+using NUnit.Framework;
 
 namespace NUnitTestProject1.Common
 {
@@ -66,5 +67,18 @@ namespace NUnitTestProject1.Common
             return this;
         }
         public virtual BasePage ElementClick(string element) => ElementClick(GetElement(element));
+
+        /// <summary>
+        /// Проверка существования элемента на странице
+        /// </summary>
+        /// <param name="locator"></param>
+        /// <returns></returns>
+        public BasePage CheckElementExist(By locator)
+        {
+            IWebElement element;
+            element = Waiting.WaitElementExist(Context, locator);
+            Assert.IsNotNull(element, $"Ожидалось, что элемент с локатором {locator} будет найден");
+            return this;
+        }
     }
 }

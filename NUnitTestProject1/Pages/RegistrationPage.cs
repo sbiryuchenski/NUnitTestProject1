@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnitTestProject1.Common;
 using OpenQA.Selenium;
+using NUnit.Framework;
 
 namespace NUnitTestProject1.Pages
 {
@@ -28,6 +29,9 @@ namespace NUnitTestProject1.Pages
             };
             return elements;
         }
+
+        By lRegCompleteMsg = By.CssSelector("div.result");
+
         public override BasePage ElementClick(string element)
         {
             base.ElementClick(element);
@@ -38,5 +42,18 @@ namespace NUnitTestProject1.Pages
             base.ElementFill(element, value, isClear);
             return this;
         }
+
+        /// <summary>
+        /// Проверить, что регистрация завершена успешно
+        /// </summary>
+        /// <returns></returns>
+        public RegistrationPage CheckRegisterComplete()
+        {
+            var regCompleteText = "Your registration completed";
+            var element = Waiting.WaitElementExist(Context, lRegCompleteMsg);
+            Assert.AreEqual(element.Text, regCompleteText, "Регистрация не завершена");
+            return this;
+        }
+
     }
 }

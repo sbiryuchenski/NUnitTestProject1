@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using NUnitTestProject1.Common;
+using NUnitTestProject1.Extensions;
 
 namespace NUnitTestProject1.Tests
 {
@@ -16,11 +17,12 @@ namespace NUnitTestProject1.Tests
                 .ElementClick(Fields.Male)
                 .ElementFill(Fields.FirstName, "Ivan")
                 .ElementFill(Fields.LastName, "Baran")
-                .ElementFill(Fields.Email, "123@123.bebebe")
+                .ElementFill(Fields.Email, StringExtension.GenerateRandomEmail())
                 .ElementFill(Fields.Password, "123!#$qweQWE")
                 .ElementFill(Fields.Confirm, "123!#$qweQWE")
                 .ElementClick(Buttons.Register);
-            int a = 123;
+
+            RegistrationPage.CheckRegisterComplete();
         }
     }
 }
