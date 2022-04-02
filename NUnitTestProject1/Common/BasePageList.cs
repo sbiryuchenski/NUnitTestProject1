@@ -7,10 +7,12 @@ namespace NUnitTestProject1.Common
     {
         private readonly Lazy<NavigationPage> navigationPage = new(() => new NavigationPage(null));
         private readonly Lazy<RegistrationPage> registrationPage = new(() => new RegistrationPage(null));
+        private readonly Lazy<LoginPage> loginPage = new(() => new LoginPage(null));
 
 
         public NavigationPage NavigationPage => InitializePage(navigationPage);
         public RegistrationPage RegistrationPage => InitializePage(registrationPage);
+        public LoginPage LoginPage => InitializePage(loginPage);
 
 
         private T InitializePage<T>(Lazy<T> page) where T : BasePage

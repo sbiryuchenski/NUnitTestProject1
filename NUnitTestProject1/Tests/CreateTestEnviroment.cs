@@ -32,6 +32,7 @@ namespace NUnitTestProject1.Tests
             NavigationPage.Register()
                 .FillAllFields(user)
                 .ElementClick(Buttons.Register);
+            LoginPage.CheckAccountLogin(user.Email);
         }
     }
 }
