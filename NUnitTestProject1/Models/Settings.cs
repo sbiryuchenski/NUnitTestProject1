@@ -33,5 +33,13 @@
         /// Данные авторизации. Пароль
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// Создавать ли отчёт прогона
+        /// </summary>
+        public bool CreateReport { get; set; }
+        /// <summary>
+        /// Папка с отчётами
+        /// </summary>
+        public string Reports { get; set; }
     }
 }

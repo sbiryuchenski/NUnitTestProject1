@@ -5,5 +5,7 @@
   "Width": 100,
   "Url": "http://demowebshop.tricentis.com/",
   "Email": "Testov.Test.Testovich@Test.test",
-  "Password": "WhoIsThatTester"
+  "Password": "WhoIsThatTester",
+  "CreateReport" : true,
+  "Reports": "C:/Users/Serg/Desktop/Reports"
 }

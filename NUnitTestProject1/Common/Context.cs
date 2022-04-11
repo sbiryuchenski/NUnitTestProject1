@@ -8,9 +8,7 @@ using System;
 using OpenQA.Selenium.Support.UI;
 using System.Text.Json;
 using NUnitTestProject1;
-using NUnit.Framework;
 using NUnitTestProject1.Enums;
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace Shop.Test
